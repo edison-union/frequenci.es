@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 0,
+    "no-console": 0,
+    "no-undef": 0
+  },
+  "globals": {
+    "setTimeout": true,
+    "window": true,
+    "fetch": true,
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",  // Pragma to use, default to "React"
+      "version": "16.6.3", // React version, default to the latest React stable release
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ]
+}
