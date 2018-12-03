@@ -5,14 +5,16 @@ import PQueue from 'p-queue'
 import * as marker from '../images/marker.svg'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone';
+import AudioService from '../services/audio';
 
 class Country extends Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.queueRequests();
+    this.audioService = new AudioService();
+  }
+
+  componentWillUnmount() {
+    this.audioService.destroy();
   }
 
   queueRequests() {
@@ -24,7 +26,7 @@ class Country extends Component {
       const time = now.clone();
       time.tz(airport.timezone_id);
       const end = time.unix();
-      const start = time.add(-60, 'seconds').unix();
+      const start = time.add(-15, 'minutes').unix();
 
       queue.add(() =>
         fetch(`${process.env.API_URL_ARRIVALS}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
@@ -33,14 +35,14 @@ class Country extends Component {
           })
           .then((json) => {
             if (json.length) {
-              // eslint-disable-next-line
-              console.log(json);
+              this.audioService.arrivalSound();
             }
           })
           .catch(() => {
             //console.log(err);
           })
       );
+
       queue.add(() =>
         fetch(`${process.env.API_URL_DEPARTURES}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
           .then((response) => {
@@ -48,8 +50,7 @@ class Country extends Component {
           })
           .then((json) => {
             if (json.length) {
-              // eslint-disable-next-line
-              console.log(json);
+              this.audioService.departureSound();
             }
           })
           .catch(() => {
