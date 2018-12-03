@@ -17,6 +17,7 @@
     "gatsby-source-filesystem": "^2.0.8",
     "gatsby-transformer-json": "^2.1.5",
     "gatsby-transformer-sharp": "^2.1.8",
+    "moment-timezone": "^0.5.23",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-geocode": "^0.1.2",

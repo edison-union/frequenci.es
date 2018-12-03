@@ -1,1 +1,7 @@
 # Frequenci.es
+
+### Environment variables
+GOOGLE_API_KEY
+API_URL_ARRIVALS
+API_URL_DEPARTURES
+REQUEST_INTERVAL=10000

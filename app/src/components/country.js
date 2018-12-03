@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import PQueue from 'p-queue'
 import * as marker from '../images/marker.svg'
 import fetch from 'isomorphic-fetch'
+import moment from 'moment-timezone';
 
 class Country extends Component {
   constructor() {
@@ -17,10 +18,14 @@ class Country extends Component {
   queueRequests() {
     const { data } = this.props;
     const queue = new PQueue({ concurrency: 2 });
-    const end = Math.floor(new Date().getTime() / 1000);
-    const start = end - 60;
+    const now = moment();
 
     data.forEach((airport) => {
+      const time = now.clone();
+      time.tz(airport.timezone_id);
+      const end = time.unix();
+      const start = time.add(-60, 'seconds').unix();
+
       queue.add(() =>
         fetch(`${process.env.API_URL_ARRIVALS}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
           .then((response) => {
@@ -32,8 +37,8 @@ class Country extends Component {
               console.log(json);
             }
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
+            //console.log(err);
           })
       );
       queue.add(() =>
@@ -47,8 +52,8 @@ class Country extends Component {
               console.log(json);
             }
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
+          //  console.log(err);
           })
       );
     });
