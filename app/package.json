@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build": "node ./build.js && gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "test": "echo \"Error: no test specified\" && exit 1"
