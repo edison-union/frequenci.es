@@ -75,7 +75,7 @@ class Country extends Component {
 
   queueRequests() {
     const { data } = this.props;
-    const queue = new PQueue({ concurrency: 6 });
+    const queue = new PQueue({ concurrency: 4 });
     const now = moment();
 
     data.forEach((airport) => {
@@ -130,7 +130,19 @@ class Country extends Component {
       return this.state.buffer.some((f) => f.callsign === flight.callsign && flight.estDepartureAirport === airport.gps_code);
     }).length > 0;
 
-    return hasDeparture ? markerActive : marker;
+    if (hasDeparture) {
+      return {
+         url: markerActive,
+         anchor: new google.maps.Point(12, 12),
+         size: new google.maps.Size(24, 24)
+       };
+     }
+
+     return {
+        url: marker,
+        anchor: new google.maps.Point(1, 1),
+        size: new google.maps.Size(2, 2)
+      };
   }
 
   render() {
@@ -148,10 +160,8 @@ class Country extends Component {
         }
 
         return <Marker key={airport.gps_code}
-          icon={{
-             url: this.getMarkerForAirport(airport)
-           }}
-           position={airport.coordinates} />
+          icon={this.getMarkerForAirport(airport)}
+          position={airport.coordinates} />
       })}
     </GoogleMap>);
   }

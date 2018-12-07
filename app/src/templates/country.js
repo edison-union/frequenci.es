@@ -33,7 +33,7 @@ class CountryTemplate extends React.Component {
   componentDidMount() {
     const { data } = this.props;
     const filtered = data.airportsJson.airports.filter((airport) => {
-      return ['large_airport'].includes(airport.type);
+      return ['large_airport', 'medium_airport', 'small_airport'].includes(airport.type);
     });
 
     this.setState({ country: data.airportsJson.name, airports: filtered, center: data.airportsJson.center });

@@ -1,13 +1,24 @@
+import BufferLoader from './buffer'
+
 class AudioService {
   constructor() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new window.AudioContext();
+    this.bufferLoader = new BufferLoader(this.context, [
+      '/sounds/ping-c.wav',
+      '/sounds/ping-d.wav',
+      '/sounds/ping-e.wav'
+    ]);
+    this.buffer = [];
+    this.bufferLoader.load().then((buffer) => {
+      this.buffer = buffer;
+    });
     this.noiseNodes = [];
   }
 
   createNoiseGen(frequency) {
     const gain = this.context.createGain();
-    gain.gain.value = 0.45;
+    gain.gain.value = 0.15;
     gain.connect(this.context.destination);
     const filter = this.context.createBiquadFilter();
     const panner = this.context.createPanner();
@@ -56,7 +67,7 @@ class AudioService {
   }
 
   backgroundSound() {
-    const note = 50;
+    const note = 45;
     const scale = [0.0, 2.0, 4.0, 6.0, 7.0, 9.0, 11.0, 12.0, 14.0];
     const oscillators = 40;
     for (let i = 0; i < oscillators; i++) {
@@ -67,33 +78,11 @@ class AudioService {
     }
   }
 
-  departureSound(options) {
-    const delay = this.context.createDelay(10.0);
-    delay.delayTime.value = 0.2;
-
-    const gain = this.context.createGain();
-    gain.gain.value = 0.25;
-
-    const filter = this.context.createBiquadFilter();
-    filter.type = filter.BANDPASS;
-    filter.frequency.value = 500;
-
-    const start = this.context.currentTime + (options.offset);
-    const end = this.context.currentTime + options.time + (options.offset);
-
-    const oscillator = this.context.createOscillator();
-    oscillator.connect(delay);
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 200 + options.pitchShift;
-    oscillator.start(start);
-    oscillator.stop(end);
-
-    delay.connect(gain);
-    gain.connect(filter);
-    filter.connect(delay);
-    oscillator.connect(delay);
-    oscillator.connect(this.context.destination);
-    delay.connect(this.context.destination);
+  departureSound() {
+    const source = this.context.createBufferSource();
+    source.buffer = this.buffer[Math.round(Math.random()*this.buffer.length)];
+    source.connect(this.context.destination);
+    source.start();
   }
 
   destroy() {
