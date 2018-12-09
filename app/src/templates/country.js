@@ -7,6 +7,7 @@ import Helmet from 'react-helmet'
 import Country from '../components/country'
 import Layout from '../components/layout'
 import MapStyles from '../style/mapStyles'
+import { colours } from '../style/variables'
 
 class CountryTemplate extends React.Component {
   static propTypes = {
@@ -72,7 +73,9 @@ const Container = styled.div`
   width: 100vw;
   height: 105vh;
 `
-const Loading = styled(Container)``
+const Loading = styled(Container)`
+  background-color: ${colours.white};
+`
 const Map = styled(Container)``
 
 export default CountryTemplate

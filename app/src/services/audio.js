@@ -4,14 +4,28 @@ class AudioService {
   constructor() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new window.AudioContext();
-    this.bufferLoader = new BufferLoader(this.context, [
-      '/sounds/ping-c.wav',
-      '/sounds/ping-d.wav',
-      '/sounds/ping-e.wav'
-    ]);
+    this.sounds = [{
+      type: 'large_airport',
+      sounds: [
+        '/sounds/ping-c.wav',
+        '/sounds/ping-d.wav',
+        '/sounds/ping-e.wav'
+      ]
+    }, {
+      type: 'medium_airport',
+      sounds: [
+        '/sounds/warble-c.wav',
+        '/sounds/warble-d.wav',
+        '/sounds/warble-e.wav'
+      ]
+    }];
+
+    this.bufferLoader = new BufferLoader(this.context, this.sounds);
     this.buffer = [];
     this.bufferLoader.load().then((buffer) => {
       this.buffer = buffer;
+    }).catch((err) => {
+      console.log(err);
     });
     this.noiseNodes = [];
   }
@@ -67,9 +81,9 @@ class AudioService {
   }
 
   backgroundSound() {
-    const note = 45;
-    const scale = [0.0, 2.0, 4.0, 6.0, 7.0, 9.0, 11.0, 12.0, 14.0];
-    const oscillators = 40;
+    const note = 55;
+    const scale = [0.0, 2.0, 4.0, 6.0, 7.0, 9.0];
+    const oscillators = 25;
     for (let i = 0; i < oscillators; i++) {
       var degree = Math.floor(Math.random() * scale.length);
       var frequency = this.mtof(note + scale[degree]);
@@ -78,9 +92,11 @@ class AudioService {
     }
   }
 
-  departureSound() {
+  departureSound(type) {
     const source = this.context.createBufferSource();
-    source.buffer = this.buffer[Math.round(Math.random()*this.buffer.length)];
+    const group = this.sounds.map((sound) => sound.type).indexOf(type);
+    const sound = Math.round(Math.random()*this.buffer[group].length);
+    source.buffer = this.buffer[group][sound];
     source.connect(this.context.destination);
     source.start();
   }
