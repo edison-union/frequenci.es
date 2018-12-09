@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import PropTypes from 'prop-types'
 import PQueue from 'p-queue'
-import * as marker from '../images/marker.svg'
-import * as markerActive from '../images/marker-active.svg'
+import * as markerLarge from '../images/marker-large.svg'
+import * as markerLargeActive from '../images/marker-large-active.svg'
+import * as markerMedium from '../images/marker-medium.svg'
+import * as markerMediumActive from '../images/marker-medium-active.svg'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
 import AudioService from '../services/audio'
@@ -38,12 +40,16 @@ class Country extends Component {
     let buffer = this.state.flights
       .filter((flight) => !flight.processing && !flight.processed)
       .map((flight) => {
-        this.audioService.departureSound(data.reduce((a, b) => {
-          if (flight.estDepartureAirport === b.gps_code) {
-            return b.type;
-          }
-          return a;
-        }, null));
+        const options = {
+          height: flight.estDepartureAirportVertDistance,
+          type: data.reduce((a, b) => {
+            if (flight.estDepartureAirport === b.gps_code) {
+              return b.type;
+            }
+            return a;
+          }, null)
+        }
+        this.audioService.departureSound(options);
 
         flight.timestamp = Date.now();
         flight.processing = true;
@@ -115,22 +121,36 @@ class Country extends Component {
   }
 
   getMarkerForAirport(airport) {
+    const markerMap = [{
+      type: 'large_airport',
+      marker: markerLarge,
+      markerActive: markerLargeActive,
+      size: 3
+    }, {
+      type: 'medium_airport',
+      marker: markerMedium,
+      markerActive: markerMediumActive,
+      size: 2
+    }];
+
     const hasDeparture = this.state.flights.filter((flight) => {
       return this.state.buffer.some((f) => f.callsign === flight.callsign && flight.estDepartureAirport === airport.gps_code);
     }).length > 0;
 
+    const matchingIcon = markerMap.filter((m) => m.type === airport.type)[0];
+
     if (hasDeparture) {
       return {
-         url: markerActive,
-         anchor: new google.maps.Point(12, 12),
-         size: new google.maps.Size(24, 24)
+         url: matchingIcon.markerActive,
+         anchor: new google.maps.Point(6, 6),
+         size: new google.maps.Size(12, 12)
        };
      }
 
      return {
-        url: marker,
-        anchor: new google.maps.Point(1, 1),
-        size: new google.maps.Size(2, 2)
+        url: matchingIcon.marker,
+        anchor: new google.maps.Point(matchingIcon.size / 2, matchingIcon.size / 2),
+        size: new google.maps.Size(matchingIcon.size, matchingIcon.size)
       };
   }
 
@@ -140,7 +160,7 @@ class Country extends Component {
     return (<GoogleMap
       defaultOptions={{ styles: mapStyles, disableDefaultUI: true }}
       defaultZoom={5}
-      defaultCenter={ center }>
+      defaultCenter={center}>
       {data.map((airport, index) => {
         if (this.state.bounds) {
           this.setState((prevState) => {

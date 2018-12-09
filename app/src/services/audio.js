@@ -18,6 +18,13 @@ class AudioService {
         '/sounds/warble-d.wav',
         '/sounds/warble-e.wav'
       ]
+    }, {
+      type: 'small_airport',
+      sounds: [
+        '/sounds/hum-c.wav',
+        '/sounds/hum-d.wav',
+        '/sounds/hum-e.wav'
+      ]
     }];
 
     this.bufferLoader = new BufferLoader(this.context, this.sounds);
@@ -92,10 +99,27 @@ class AudioService {
     }
   }
 
-  departureSound(type) {
+  mapHeightToNote(height) {
+    const max = this.sounds.reduce((a, b) => {
+      if (a < b.sounds.length) {
+        return b.sounds.length;
+      }
+      return a;
+    }, 0);
+
+    const value = this.map(height, 0, process.env.AIRCRAFT_CEILING, 0, max);
+
+    return value > max ? max : Math.round(value);
+  }
+
+  map(value, start1, stop1, start2, stop2) {
+    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+  }
+
+  departureSound(options) {
     const source = this.context.createBufferSource();
-    const group = this.sounds.map((sound) => sound.type).indexOf(type);
-    const sound = Math.round(Math.random()*this.buffer[group].length);
+    const group = this.sounds.map((sound) => sound.type).indexOf(options.type);
+    const sound = this.mapHeightToNote(options.height);
     source.buffer = this.buffer[group][sound];
     source.connect(this.context.destination);
     source.start();
