@@ -25,7 +25,8 @@ exports.createPages = ({ graphql, actions }) => {
             edges {
               node {
                 id,
-                country
+                country,
+                name
               }
             }
           }
@@ -43,7 +44,8 @@ exports.createPages = ({ graphql, actions }) => {
             path: `/${slug(edge.node.country.toLowerCase())}/`,
             component: slash(postTemplate),
             context: {
-              id: edge.node.id
+              id: edge.node.id,
+              name: edge.node.name
             },
           })
         });

@@ -6,9 +6,9 @@ module.exports = {
   siteMetadata: {
     name: 'Frequencies',
     title: 'Frequencies',
-    description: 'A data sonification of flight departures and arrivals',
+    description: 'A data sonification of flight departures from around the world',
     siteUrl: 'https://frequenci.es',
-    keywords: 'Data sonification, airports, music for airports, ambient, flight patterns, arrivals, departures',
+    keywords: 'Data sonification, airports, music for airports, ambient, flight patterns, departures',
     google_site_verification: 'MJDFKPslztppagIFWP9KbeVemhd_jI70eeatBQ3-bRo',
     og: {
       image: 'https://frequenci.es/images/og-image.png'

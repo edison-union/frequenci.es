@@ -6,7 +6,7 @@ const IndexPage = () => (
   <Layout>
     <Container>
       <h1>Frequencies</h1>
-      <h3>Music for Airports</h3>
+      <h3>Music from Airports</h3>
     </Container>
   </Layout>
 )

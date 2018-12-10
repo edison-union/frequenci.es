@@ -14,7 +14,11 @@ class CountryTemplate extends React.Component {
     data: PropTypes.shape({
       airportsJson: PropTypes.object.isRequired,
     }),
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    pageContext: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    })
   }
 
   constructor() {
@@ -37,7 +41,7 @@ class CountryTemplate extends React.Component {
       return ['large_airport', 'medium_airport', 'small_airport'].includes(airport.type);
     });
 
-    this.setState({ country: data.airportsJson.name, airports: filtered, center: data.airportsJson.center });
+    this.setState({ airports: filtered, center: data.airportsJson.center });
 
     filtered.forEach((airport) => {
       this.setState(prevState => ({
@@ -47,13 +51,13 @@ class CountryTemplate extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, pageContext } = this.props;
 
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{`frequenci.es  - ${this.state.country}`}</title>
-          <meta name="description" content="A data sonification of flight departures and arrivals in ${this.state.country}" />
+          <title>{`frequenci.es  - ${pageContext.name}`}</title>
+          <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
         </Helmet>
         <Country
           data={this.state.airports}
