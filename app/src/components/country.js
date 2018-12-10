@@ -117,7 +117,7 @@ class Country extends Component {
 
   queueRequests() {
     const { data } = this.props;
-    const queue = new PQueue({ concurrency: 5 });
+    const queue = new PQueue({ concurrency: 1 });
     const now = moment();
 
     data.forEach((airport) => {
