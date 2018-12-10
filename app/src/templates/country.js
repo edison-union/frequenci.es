@@ -34,7 +34,7 @@ class CountryTemplate extends React.Component {
   componentDidMount() {
     const { data } = this.props;
     const filtered = data.airportsJson.airports.filter((airport) => {
-      return ['large_airport', 'medium_airport'].includes(airport.type);
+      return ['large_airport', 'medium_airport', 'small_airport'].includes(airport.type);
     });
 
     this.setState({ country: data.airportsJson.name, airports: filtered, center: data.airportsJson.center });
@@ -71,7 +71,7 @@ class CountryTemplate extends React.Component {
 const Container = styled.div`
   display: flex;
   width: 100vw;
-  height: 105vh;
+  height: 103vh;
 `
 const Loading = styled(Container)`
   background-color: ${colours.white};

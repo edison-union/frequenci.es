@@ -6,10 +6,13 @@ import * as markerLarge from '../images/marker-large.svg'
 import * as markerLargeActive from '../images/marker-large-active.svg'
 import * as markerMedium from '../images/marker-medium.svg'
 import * as markerMediumActive from '../images/marker-medium-active.svg'
+import * as markerSmall from '../images/marker-small.svg'
+import * as markerSmallActive from '../images/marker-small-active.svg'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
 import AudioService from '../services/audio'
 import Song from '../services/song'
+import { MAP } from 'react-google-maps/lib/constants'
 
 class Country extends Component {
   constructor() {
@@ -17,7 +20,7 @@ class Country extends Component {
     this.state = {
       flights: [],
       buffer: [],
-      bounds: window.google.maps.LatLngBounds()
+      bounds: new google.maps.LatLngBounds()
     };
   }
 
@@ -26,8 +29,19 @@ class Country extends Component {
     this.audioService.backgroundSound();
     this.song = new Song();
     this.queueRequests();
-    this.setState({ bounds: window.google.maps.LatLngBounds()});
-    this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getNoteDelay(1, 1));
+    this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getBars(1));
+
+    // Extend the bounds of the map to the markers
+    const { data } = this.props;
+    data.map((airport) => {
+      this.setState((prevState) => {
+        return { bounds: prevState.bounds.extend(new google.maps.LatLng(airport.coordinates.lat, airport.coordinates.lng)) }
+      });
+    });
+
+    const map = this.map.context[MAP];
+    map.setCenter(this.state.bounds.getCenter());
+    map.fitBounds(this.state.bounds);
   }
 
   componentWillUnmount() {
@@ -61,11 +75,11 @@ class Country extends Component {
   }
 
   isDecayedFlight(flight) {
-    return Date.now() - flight.timestamp > 2500;
+    return Date.now() - flight.timestamp > this.song.getBars(1);
   }
 
   clearBuffer() {
-    let unprocessed = this.state.buffer.filter(this.isDecayedFlight).map((flight) => {
+    let unprocessed = this.state.buffer.filter((flight) => { this.isDecayedFlight(flight) }).map((flight) => {
       flight.processed = true;
       flight.processing = false;
       return flight;
@@ -111,7 +125,6 @@ class Country extends Component {
       time.tz(airport.timezone_id);
       const end = time.unix();
       const start = time.add(-5, 'minutes').unix();
-
       queue.add(() => this.getDepartures(airport, start, end));
     });
 
@@ -131,6 +144,11 @@ class Country extends Component {
       marker: markerMedium,
       markerActive: markerMediumActive,
       size: 2
+    }, {
+      type: 'small_airport',
+      marker: markerSmall,
+      markerActive: markerSmallActive,
+      size: 1
     }];
 
     const hasDeparture = this.state.flights.filter((flight) => {
@@ -142,8 +160,8 @@ class Country extends Component {
     if (hasDeparture) {
       return {
          url: matchingIcon.markerActive,
-         anchor: new google.maps.Point(6, 6),
-         size: new google.maps.Size(12, 12)
+         anchor: new google.maps.Point(12, 12),
+         size: new google.maps.Size(24, 24)
        };
      }
 
@@ -156,18 +174,12 @@ class Country extends Component {
 
   render() {
     const { data, center, mapStyles } = this.props;
-
     return (<GoogleMap
+      ref={(map) => { this.map = map; }}
       defaultOptions={{ styles: mapStyles, disableDefaultUI: true }}
       defaultZoom={5}
       defaultCenter={center}>
       {data.map((airport, index) => {
-        if (this.state.bounds) {
-          this.setState((prevState) => {
-            return { bounds: prevState.bounds.extend(airport.coordinates) }
-          });
-        }
-
         return <Marker key={`${airport.gps_code}-${index}`}
           icon={this.getMarkerForAirport(airport)}
           position={airport.coordinates} />

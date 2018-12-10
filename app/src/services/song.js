@@ -9,6 +9,10 @@ class Song {
   getNoteDelay(beat, type = this.barLength) {
     return beat * this.barLength / type;
   }
+
+  getBars(bars) {
+    return this.getNoteDelay(this.beatsPerBar, bars);
+  }
 }
 
 export default Song;
