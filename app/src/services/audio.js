@@ -120,9 +120,6 @@ class AudioService {
     const source = this.context.createBufferSource();
     const group = this.sounds.map((sound) => sound.type).indexOf(options.type);
     const sound = this.mapHeightToNote(options.height);
-    console.log(sound);
-    console.log(group);
-    console.log(this.buffer[group][sound]);
     source.buffer = this.buffer[group][sound];
     source.connect(this.context.destination);
     source.start();
