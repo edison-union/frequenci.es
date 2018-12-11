@@ -93,7 +93,6 @@ class Country extends Component {
 
     let processed = this.state.flights.filter((flight) => flight.processed);
     if (unprocessed.length) {
-      console.log('clearing buffer');
       this.setState({
         flights: [...processed, ...unprocessed],
         buffer: this.state.buffer.filter((flight) => { return this.isDecayedFlight(flight) })
