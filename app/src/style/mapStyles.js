@@ -1,86 +1,35 @@
 import { colours } from '../style/variables'
 
-const MapStyles = [
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": colours.map.landscape
-      }
-    ]
-  },
-  {
+const MapStyles = [{
     "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative",
     "elementType": "geometry",
-    "stylers": [
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [{
+        "visibility": "on"
+      },
       {
-        "visibility": "off"
+        "color": colours.map.road
       }
     ]
   },
   {
     "featureType": "landscape",
-    "stylers": [
+    "stylers": [{
+        "color": colours.map.water
+      },
       {
         "visibility": "on"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape.natural",
-    "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "transit",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": colours.map.water
       }
     ]
   }

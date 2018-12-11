@@ -2,8 +2,9 @@ export const colours = {
   black: '#000',
   white: '#fff',
   map: {
-    water: '#01080a',
-    landscape: '#021d26'
+    water: '#050001',
+    landscape: '#050001',
+    road: '#530E39'
   }
 }
 

@@ -13,6 +13,10 @@ import moment from 'moment-timezone'
 import AudioService from '../services/audio'
 import Song from '../services/song'
 import { MAP } from 'react-google-maps/lib/constants'
+import { shuffle } from '../util/array'
+
+// TODO
+// Why is buffer being cleared?
 
 class Country extends Component {
   constructor() {
@@ -29,7 +33,7 @@ class Country extends Component {
     this.audioService.backgroundSound();
     this.song = new Song();
     this.queueRequests();
-    this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getBars(1));
+    this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getNoteDelay(1, 4));
 
     // Extend the bounds of the map to the markers
     const { data } = this.props;
@@ -52,7 +56,7 @@ class Country extends Component {
   addNewFlightsToBuffer() {
     const { data } = this.props;
     let buffer = this.state.flights
-      .filter((flight) => !flight.processing && !flight.processed)
+      .filter((flight) => !flight.processed)
       .map((flight) => {
         const options = {
           height: flight.estDepartureAirportVertDistance,
@@ -63,10 +67,12 @@ class Country extends Component {
             return a;
           }, null)
         }
-        this.audioService.departureSound(options);
 
-        flight.timestamp = Date.now();
-        flight.processing = true;
+        if (!flight.processing) {
+          this.audioService.departureSound(options);
+          flight.timestamp = new Date().getTime();
+          flight.processing = true;
+        }
         return flight;
       });
 
@@ -75,22 +81,22 @@ class Country extends Component {
   }
 
   isDecayedFlight(flight) {
-    return Date.now() - flight.timestamp > this.song.getBars(1);
+    return Date.now() - flight.timestamp > this.song.getBars(2);
   }
 
   clearBuffer() {
-    let unprocessed = this.state.buffer.filter((flight) => { this.isDecayedFlight(flight) }).map((flight) => {
+    let unprocessed = this.state.buffer.filter((flight) => { return this.isDecayedFlight(flight) }).map((flight) => {
       flight.processed = true;
       flight.processing = false;
       return flight;
     });
 
     let processed = this.state.flights.filter((flight) => flight.processed);
-
     if (unprocessed.length) {
+      console.log('clearing buffer');
       this.setState({
         flights: [...processed, ...unprocessed],
-        buffer: this.state.buffer.filter(this.isDecayedFlight)
+        buffer: this.state.buffer.filter((flight) => { return this.isDecayedFlight(flight) })
       });
     }
   }
@@ -120,7 +126,7 @@ class Country extends Component {
     const queue = new PQueue({ concurrency: 1 });
     const now = moment();
 
-    data.forEach((airport) => {
+    data.sort(shuffle).forEach((airport) => {
       const time = now.clone();
       time.tz(airport.timezone_id);
       const end = time.unix();

@@ -55,7 +55,7 @@ class AudioService {
 
     filter.type = filter.BANDPASS;
     filter.frequency.value = frequency;
-    filter.Q.value = 50;
+    filter.Q.value = 30;
     filter.connect(panner);
 
     const noise = this.context.createScriptProcessor(bufferLen, 1, 2);
@@ -102,7 +102,7 @@ class AudioService {
   mapHeightToNote(height) {
     const max = this.sounds.reduce((a, b) => {
       if (a < b.sounds.length) {
-        return b.sounds.length;
+        return b.sounds.length-1;
       }
       return a;
     }, 0);
