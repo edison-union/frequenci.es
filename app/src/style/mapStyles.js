@@ -26,6 +26,16 @@ const MapStyles = [{
   {
     "featureType": "landscape",
     "stylers": [{
+        "color": colours.map.landscape
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "stylers": [{
         "color": colours.map.water
       },
       {
