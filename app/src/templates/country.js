@@ -1,13 +1,11 @@
 import * as PropTypes from 'prop-types'
 import React from 'react'
 import { graphql } from 'gatsby'
-import styled from 'styled-components'
 import Helmet from 'react-helmet'
-
-import Country from '../components/country'
 import Layout from '../components/layout'
+import AirTrafficControl from '../components/airTrafficControl'
 import MapStyles from '../style/mapStyles'
-import { colours } from '../style/variables'
+import { AirportConstants } from '../constants/airports'
 
 class CountryTemplate extends React.Component {
   static propTypes = {
@@ -31,14 +29,13 @@ class CountryTemplate extends React.Component {
         lat: 0,
         lng: 0
       },
-      mapUrl: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
     }
   }
 
   componentDidMount() {
     const { data } = this.props;
     const filtered = data.airportsJson.airports.filter((airport) => {
-      return ['large_airport', 'medium_airport', 'small_airport'].includes(airport.type);
+      return AirportConstants[airport.type]
     });
 
     this.setState({ airports: filtered, center: data.airportsJson.center });
@@ -50,37 +47,49 @@ class CountryTemplate extends React.Component {
     });
   }
 
+  getStaticMapUrl(center) {
+    let url = `https://maps.googleapis.com/maps/api/staticmap?&size=1200x615&zoom=6&center=${center.lat},${center.lng}&format=png&scale=2&`;
+    url += MapStyles.map((style) => {
+      let output = `style=`;
+
+      if (style.featureType) {
+        output += `feature:${style.featureType}|`
+      }
+
+      if (style.elementType) {
+        output += `element:${style.elementType}|`
+      }
+
+      if (style.stylers) {
+        output += style.stylers.map((styler) => {
+          return Object.keys(styler).map((key) => {
+            return `${key}:${styler[key].replace('#', '0x')}`;
+          });
+        }).join('|')
+        console.log(output);
+      }
+
+      return output;
+    }).join('&');
+
+    return encodeURI(`${url}&key=${process.env.GOOGLE_API_KEY}`);
+  }
+
   render() {
     const { location, pageContext } = this.props;
 
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{`frequenci.es  - ${pageContext.name}`}</title>
+          <title>{`🛫 ${pageContext.name} 🎶`}</title>
           <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
+          <meta name="og:image" url={this.getStaticMapUrl(pageContext.center)}/>
         </Helmet>
-        <Country
-          data={this.state.airports}
-          mapStyles={MapStyles}
-          googleMapURL={this.state.mapUrl}
-          center={this.state.center}
-          loadingElement={(<Loading/>)}
-          containerElement={<Container/>}
-          mapElement={<Map/>}/>
+        <AirTrafficControl country={pageContext.name} data={this.state.airports} center={this.state.center}/>
       </Layout>
     )
   }
 }
-
-const Container = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 103vh;
-`
-const Loading = styled(Container)`
-  background-color: ${colours.white};
-`
-const Map = styled(Container)``
 
 export default CountryTemplate
 

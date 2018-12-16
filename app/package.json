@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "David Johnson <david@struct.com.au>",
   "dependencies": {
+    "classnames": "^2.2.6",
     "eslint": "^5.10.0",
     "gatsby": "^2.0.64",
     "gatsby-image": "^2.0.22",

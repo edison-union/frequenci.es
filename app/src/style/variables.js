@@ -1,6 +1,10 @@
 export const colours = {
   black: '#000',
   white: '#fff',
+  flightBoard: {
+    background:'#080002',
+    text: '#fff'
+  },
   map: {
     water: '#050001',
     landscape: '#080002',
@@ -38,3 +42,5 @@ export const fonts = {
   subtitle: "'TT Firs Neue Light', sans-serif",
   body: "Georgia, serif"
 }
+
+export const flightBoardHeight = `10rem`

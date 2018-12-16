@@ -3,6 +3,7 @@ class BufferLoader {
     this.context = context;
     this.urls = urls;
     this.buffer = [];
+    console.log(urls);
   }
 
   loadSoundFile(url, type) {

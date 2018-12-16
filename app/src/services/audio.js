@@ -1,33 +1,11 @@
 import BufferLoader from './buffer'
+import { AirportConstants } from '../constants/airports'
 
 class AudioService {
   constructor() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new window.AudioContext();
-    this.sounds = [{
-      type: 'large_airport',
-      sounds: [
-        '/sounds/ping-c.wav',
-        '/sounds/ping-d.wav',
-        '/sounds/ping-e.wav'
-      ]
-    }, {
-      type: 'medium_airport',
-      sounds: [
-        '/sounds/warble-c.wav',
-        '/sounds/warble-d.wav',
-        '/sounds/warble-e.wav'
-      ]
-    }, {
-      type: 'small_airport',
-      sounds: [
-        '/sounds/hum-c.wav',
-        '/sounds/hum-d.wav',
-        '/sounds/hum-e.wav'
-      ]
-    }];
-
-    this.bufferLoader = new BufferLoader(this.context, this.sounds);
+    this.bufferLoader = new BufferLoader(this.context, Object.keys(AirportConstants).map((key) => AirportConstants[key]));
     this.buffer = [];
     this.bufferLoader.load().then((buffer) => {
       this.buffer = buffer;
@@ -100,7 +78,7 @@ class AudioService {
   }
 
   mapHeightToNote(height) {
-    const max = this.sounds.reduce((a, b) => {
+    const max = Object.keys(AirportConstants).map((key) => AirportConstants[key]).reduce((a, b) => {
       if (a < b.sounds.length) {
         return b.sounds.length-1;
       }
@@ -118,7 +96,7 @@ class AudioService {
 
   departureSound(options) {
     const source = this.context.createBufferSource();
-    const group = this.sounds.map((sound) => sound.type).indexOf(options.type);
+    const group = Object.keys(AirportConstants).indexOf(options.type);
     const sound = this.mapHeightToNote(options.height);
     source.buffer = this.buffer[group][sound];
     source.connect(this.context.destination);

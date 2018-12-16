@@ -26,7 +26,11 @@ exports.createPages = ({ graphql, actions }) => {
               node {
                 id,
                 country,
-                name
+                name,
+                center {
+                  lat,
+                  lng
+                }
               }
             }
           }
@@ -45,7 +49,8 @@ exports.createPages = ({ graphql, actions }) => {
             component: slash(postTemplate),
             context: {
               id: edge.node.id,
-              name: edge.node.name
+              name: edge.node.name,
+              center: edge.node.center
             },
           })
         });
