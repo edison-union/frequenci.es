@@ -66,7 +66,6 @@ class CountryTemplate extends React.Component {
             return `${key}:${styler[key].replace('#', '0x')}`;
           });
         }).join('|')
-        console.log(output);
       }
 
       return output;
