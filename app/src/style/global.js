@@ -51,8 +51,7 @@ export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-family: 'TT Firs Neue Light';
     line-height: 1.2;
-    margin: 0 0 1rem;
-    text-transform: uppercase;
+    margin: 0 0 1.75rem;
   }
 
   h1 {

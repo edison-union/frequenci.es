@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classNames from 'classnames'
 import { above } from '../style/mixins'
-import { colours, flightBoardHeight, spacing, timings } from '../style/variables'
+import { colours, spacing, timings } from '../style/variables'
 import { AirportConstants } from '../constants/airports'
 import Song from '../services/song'
 
@@ -34,6 +34,7 @@ class FlightBoard extends Component {
   render() {
     return (
       <Container>
+        <Heading>Departure Board</Heading>
         {this.state.flights && this.state.flights.map((flight, i) => {
           if (this.isValidFlight(flight, i)) {
             return (<Flight className={classNames({
@@ -59,17 +60,25 @@ FlightBoard.propTypes = {
 export default FlightBoard
 
 const Container = styled.section`
+  background-color: ${colours.navigation.background_hover};
+  box-sizing: border-box;
   align-items: center;
-  background-color: ${colours.flightBoard.background};
-  color: ${colours.flightBoard.text};
-  height: ${flightBoardHeight};
-  padding: ${spacing.md};
+  color: ${colours.navigation.text};
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: ${spacing.default};
   overflow-y: auto;
+  width: 100%;
 
   ${above.md`
-    width: 25vw;
-    height: 103vh;
+    width: 30rem;
+    height: 100vh;
   `}
+`
+
+const Heading = styled.h4`
+  align-self: start;
 `
 
 const Flight = styled.div`
@@ -77,6 +86,7 @@ const Flight = styled.div`
   color: ${colours.black};
   display: flex;
   flex-direction: column;
+  min-height: min-content;
   font-size: .8rem;
   margin-bottom: ${spacing.xs};
   padding: ${spacing.xs} ${spacing.sm};

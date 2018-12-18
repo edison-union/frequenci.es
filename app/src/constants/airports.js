@@ -10,9 +10,14 @@ export const AirportConstants = {
     key: 'large',
     colour: '#BF3541',
     markers: {
-      default: markerLarge,
-      active: markerLargeActive,
-      size: 6,
+      default: {
+        icon: markerLarge,
+        size: 12
+      },
+      active: {
+        icon: markerLargeActive,
+        size: 48
+      },
     },
     sounds: [
       '/sounds/ping-c.wav',
@@ -24,9 +29,14 @@ export const AirportConstants = {
     key: 'medium',
     colour: '#F08A2A',
     markers: {
-      default: markerMedium,
-      active: markerMediumActive,
-      size: 3,
+      default: {
+        icon: markerMedium,
+        size: 6
+      },
+      active: {
+        icon: markerMediumActive,
+        size: 24
+      },
     },
     sounds: [
       '/sounds/warble-c.wav',
@@ -38,9 +48,14 @@ export const AirportConstants = {
     key: 'small',
     colour: '#1D89BC',
     markers: {
-      default: markerSmall,
-      active: markerSmallActive,
-      size: 2,
+      default: {
+        icon: markerSmall,
+        size: 3
+      },
+      active: {
+        icon: markerSmallActive,
+        size: 12
+      },
     },
     sounds: [
       '/sounds/hum-c.wav',

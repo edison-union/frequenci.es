@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
+import styled from 'styled-components'
 import AudioService from '../services/audio'
 import Song from '../services/song'
 import PQueue from 'p-queue'
+import Country from './country'
+import Navigation from './navigation'
 import { shuffle } from '../util/array'
-import styled from 'styled-components'
 import { colours } from '../style/variables'
-import Country from '../components/country'
-import FlightBoard from '../components/flightBoard'
 import { above } from '../style/mixins'
-import { flightBoardHeight } from '../style/variables'
+import _ from 'lodash'
 
 class AirTrafficControl extends Component {
   constructor() {
     super();
-    this.queue = new PQueue({ concurrency: 1 });
+    this.queue = new PQueue({ concurrency: parseInt(process.env.API_REQUEST_CONCURRENCY) });
     this.state = {
       flights: [],
       buffer: [],
@@ -46,7 +46,10 @@ class AirTrafficControl extends Component {
         return flight;
       });
 
-    this.setState({ buffer: buffer });
+    if (!_.isEqual(buffer, this.state.buffer)) {
+      this.setState({ buffer: buffer });
+    }
+
     this.clearBuffer();
   }
 
@@ -55,18 +58,22 @@ class AirTrafficControl extends Component {
   }
 
   clearBuffer() {
-    this.setState({
-      buffer: this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) })
-    });
+    const expired = this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) });
+
+    if (!_.isEqual(expired, this.state.buffer)) {
+      this.setState({
+        buffer: this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) })
+      });
+    }
   }
 
   getDepartures(airport, start, end) {
     return fetch(`${process.env.API_URL_DEPARTURES}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
       .then((response) => {
         if (!response.ok) {
-          throw Error({
-            status: 'blocked'
-          });
+          return Promise.reject({
+            status: response.status
+          })
         }
         return response.json();
       })
@@ -96,7 +103,9 @@ class AirTrafficControl extends Component {
         }
       })
       .catch((err) => {
-        if (err.status === 'blocked') {
+        // When a 503 error occurs for some reason fetch thinks it's an OPTIONS request that failed
+        // So doesn't return a response, it just throws an error
+        if (err.toString() === 'TypeError: Failed to fetch') {
           this.queue.pause();
           setTimeout(() => this.queue.start(), process.env.API_RETRY_TIMEOUT);
         }
@@ -137,6 +146,7 @@ class AirTrafficControl extends Component {
   render() {
     return (
       <Container>
+        <Navigation {...this.props} {...this.state}/>
         <Country
           googleMapURL={this.state.mapUrl}
           loadingElement={(<Loading/>)}
@@ -144,7 +154,6 @@ class AirTrafficControl extends Component {
           mapElement={<Map/>}
           {...this.props}
           {...this.state}/>
-        <FlightBoard {...this.props} {...this.state}/>
       </Container>
     );
   }
@@ -167,14 +176,7 @@ const Container = styled.section`
 const MapContainer = styled.div`
   display: flex;
   width: 100vw;
-  height: calc(103vh - ${flightBoardHeight});
-  order: 1;
-
-  ${above.md`
-    width: 75vw;
-    height: 103vh;
-    order: 0;
-  `}
+  height: 103vh;
 `
 const Loading = styled(MapContainer)`
   background-color: ${colours.white};

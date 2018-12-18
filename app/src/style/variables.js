@@ -1,14 +1,16 @@
 export const colours = {
   black: '#000',
   white: '#fff',
-  flightBoard: {
-    background:'#080002',
-    text: '#fff'
+  navigation: {
+    background:'#c9f5f5',
+    text: '#0B1F29',
+    border: '#fefefe',
+    background_hover: '#CDFAFA'
   },
   map: {
-    water: '#050001',
-    landscape: '#080002',
-    road: '#530E39'
+    water: '#c9f5f5',
+    landscape: '#32b4c1',
+    road: '#5ed5de'
   }
 }
 
@@ -22,7 +24,7 @@ export const timings = {
 export const spacing = {
   xs: '.5rem',
   sm: '1rem',
-  default: '2rem',
+  default: '1.5rem',
   md: '3rem',
   lg: '6rem',
   xl: '12rem'
@@ -42,5 +44,3 @@ export const fonts = {
   subtitle: "'TT Firs Neue Light', sans-serif",
   body: "Georgia, serif"
 }
-
-export const flightBoardHeight = `10rem`

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { MAP } from 'react-google-maps/lib/constants'
 import MapStyles from '../style/mapStyles'
 import { AirportConstants } from '../constants/airports'
+import _ from 'lodash'
 
 class Country extends Component {
   constructor(props) {
@@ -14,10 +15,13 @@ class Country extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props) {
-    return {
-      ...props
-    };
+  static getDerivedStateFromProps(props, state) {
+    if (!_.isEqual(props, state)) {
+      return {
+        ...props
+      }
+    }
+    return null;
   }
 
   componentDidMount() {
@@ -41,21 +45,22 @@ class Country extends Component {
 
     if (hasDeparture) {
       return {
-         url: matchingIcon.active,
-         anchor: new google.maps.Point(12, 12),
-         size: new google.maps.Size(24, 24)
+         url: matchingIcon.active.icon,
+         anchor: new google.maps.Point(matchingIcon.active.size / 2, matchingIcon.active.size / 2),
+         size: new google.maps.Size(matchingIcon.active.size, matchingIcon.active.size)
        };
      }
 
      return {
-        url: matchingIcon.default,
-        anchor: new google.maps.Point(matchingIcon.size / 2, matchingIcon.size / 2),
-        size: new google.maps.Size(matchingIcon.size, matchingIcon.size)
+        url: matchingIcon.default.icon,
+        anchor: new google.maps.Point(matchingIcon.default.size / 2, matchingIcon.default.size / 2),
+        size: new google.maps.Size(matchingIcon.default.size, matchingIcon.default.size)
       };
   }
 
   render() {
     const { data, center } = this.props;
+
     return (<GoogleMap
       ref={(map) => { this.map = map; }}
       defaultOptions={{ styles: MapStyles, disableDefaultUI: true }}
