@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classNames from 'classnames'
-import { above } from '../style/mixins'
 import { colours, spacing, timings } from '../style/variables'
 import { AirportConstants } from '../constants/airports'
+import { Heading } from './shared'
 import Song from '../services/song'
+import Flyout from './flyout'
 
 class FlightBoard extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class FlightBoard extends Component {
 
   render() {
     return (
-      <Container>
+      <Flyout>
         <Heading>Departure Board</Heading>
         {this.state.flights && this.state.flights.map((flight, i) => {
           if (this.isValidFlight(flight, i)) {
@@ -41,13 +42,13 @@ class FlightBoard extends Component {
                 'is-transitioning': Date.now() - flight.timestamp > 5,
                 'is-old': Date.now() - flight.timestamp > this.song.getBars(2)
               })} types={Object.keys(AirportConstants)} activeType={flight.departure_airport.type} key={`${flight.callsign}-${i}`}>
-                <FlightCallsign>{flight.callsign}</FlightCallsign>
+                <FlightCallsign>{flight.callsign ? flight.callsign : '-' }</FlightCallsign>
                 <FlightAirport>{flight.departure_airport.name}{flight.arrival_airport ? ` - ${flight.arrival_airport.name}` : ``}</FlightAirport>
             </Flight>)
           }
           return false;
         }).reverse()}
-      </Container>
+      </Flyout>
     )
   }
 }
@@ -58,28 +59,6 @@ FlightBoard.propTypes = {
 }
 
 export default FlightBoard
-
-const Container = styled.section`
-  background-color: ${colours.navigation.background_hover};
-  box-sizing: border-box;
-  align-items: center;
-  color: ${colours.navigation.text};
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: ${spacing.default};
-  overflow-y: auto;
-  width: 100%;
-
-  ${above.md`
-    width: 30rem;
-    height: 100vh;
-  `}
-`
-
-const Heading = styled.h4`
-  align-self: start;
-`
 
 const Flight = styled.div`
   background-color: ${colours.white};

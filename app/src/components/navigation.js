@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import FlightBoard from './flightBoard'
+import SpatialAudio from './spatialAudio'
+import Info from './info'
 import { colours, spacing, timings } from '../style/variables'
 import { above } from '../style/mixins'
 import * as iconDepartures from '../images/icon-departures.svg'
@@ -42,11 +44,13 @@ class Navigation extends Component {
             <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
               <Icon src={iconRadar}/>
             </Button>
+            <SpatialAudio {...this.props} {...this.state}/>
           </ListItem>
           <ListItem>
             <Button className={ this.state.childActive === 2 ? 'is-active' : '' } onClick={() => this.toggleChild(2)}>
               <Icon src={iconInfo}/>
             </Button>
+            <Info />
           </ListItem>
         </List>
       </Container>
@@ -55,11 +59,11 @@ class Navigation extends Component {
 }
 
 const Container = styled.nav`
-  position: absolute;
-  top: 0;
-  right: 0;
   background: ${colours.navigation.background};
   color: ${colours.navigation.text};
+  position: absolute;
+  right: 0;
+  top: 0;
   z-index: 2;
 
   ${above.md`
@@ -70,26 +74,24 @@ const Container = styled.nav`
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-  position: relative;
-  z-index: 2;
 `
 
 const ListItem = styled.li`
-  display: flex;
   background: ${colours.navigation.background};
+  display: flex;
 `
 
 const Icon = styled.img`
-  width: 32px;
   height: 32px;
+  width: 32px;
 `
 
 const Button = styled.button`
   background: none;
   border: 0;
+  display: block;
   outline: 0;
   padding: ${spacing.default};
-  display: block;
 
   &:hover,
   &.is-active {
@@ -98,14 +100,14 @@ const Button = styled.button`
 
   & + * {
     position: absolute;
-    transform: translateX(100%);
+    right: calc(32px + ${spacing.default} + ${spacing.default});
     top: 0;
+    transform: translateY(-100%);
     transition: transform ${timings.lg}s ease-out;
-    z-index: -1;
   }
 
   &.is-active + * {
-    transform: translateX(-100%);
+    transform: translateY(0);
   }
 `
 

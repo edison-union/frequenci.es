@@ -4,27 +4,36 @@ import { fonts, typography } from './variables'
 import fontFiles from './fonts'
 
 export const GlobalStyle = createGlobalStyle`
-@font-face {
-      font-family: 'TT Firs Neue Medium';
-      src: local('TT Firs Neue'),
-          url('${fontFiles.TTFirsNeueMediumEOT}?#iefix') format('embedded-opentype'),
-          url('${fontFiles.TTFirsNeueMediumWOFF2}') format('woff2'),
-          url('${fontFiles.TTFirsNeueMediumWOFF}') format('woff'),
-          url('${fontFiles.TTFirsNeueMediumTTF}') format('truetype'),
-          url('${fontFiles.TTFirsNeueMediumSVG}#youworkforthem') format('svg');
-      font-weight: 500;
+  @font-face {
+      font-family: 'Visby CF Heavy';
+      src: url('${fontFiles.VisbyCFHeavyEOT}?#iefix') format('embedded-opentype'),
+          url('${fontFiles.VisbyCFHeavyWOFF2}') format('woff2'),
+          url('${fontFiles.VisbyCFHeavyWOFF}') format('woff'),
+          url('${fontFiles.VisbyCFHeavyTTF}') format('truetype'),
+          url('${fontFiles.VisbyCFHeavySVG}#youworkforthem') format('svg');
+      font-weight: normal;
       font-style: normal;
   }
 
   @font-face {
-      font-family: 'TT Firs Neue Light';
-      src: local('TT Firs Neue'),
-          url('${fontFiles.TTFirsNeueLightEOT}?#iefix') format('embedded-opentype'),
-          url('${fontFiles.TTFirsNeueLightWOFF2}') format('woff2'),
-          url('${fontFiles.TTFirsNeueLightWOFF}') format('woff'),
-          url('${fontFiles.TTFirsNeueLightTTF}') format('truetype'),
-          url('${fontFiles.TTFirsNeueLightSVG}#youworkforthem') format('svg');
-      font-weight: 100;
+      font-family: 'Visby CF Medium';
+      src: url('${fontFiles.VisbyCFMediumEOT}?#iefix') format('embedded-opentype'),
+          url('${fontFiles.VisbyCFMediumWOFF2}') format('woff2'),
+          url('${fontFiles.VisbyCFMediumWOFF}') format('woff'),
+          url('${fontFiles.VisbyCFMediumTTF}') format('truetype'),
+          url('${fontFiles.VisbyCFMediumSVG}#youworkforthem') format('svg');
+      font-weight: normal;
+      font-style: normal;
+  }
+
+  @font-face {
+      font-family: 'Visby CF Bold';
+      src: url('${fontFiles.VisbyCFBoldEOT}?#iefix') format('embedded-opentype'),
+          url('${fontFiles.VisbyCFBoldWOFF2}') format('woff2'),
+          url('${fontFiles.VisbyCFBoldWOFF}') format('woff'),
+          url('${fontFiles.VisbyCFBoldTTF}') format('truetype'),
+          url('${fontFiles.VisbyCFBoldSVG}#youworkforthem') format('svg');
+      font-weight: normal;
       font-style: normal;
   }
 
@@ -43,15 +52,16 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${fonts.body};
     font-size: ${typography.body};
     font-weight: 300;
-    letter-spacing: .05rem;
-    line-height: 1.8;
+    letter-spacing: .025rem;
+    line-height: 1.65;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'TT Firs Neue Light';
+    font-family: ${fonts.title};
     line-height: 1.2;
     margin: 0 0 1.75rem;
+    text-transform: uppercase;
   }
 
   h1 {

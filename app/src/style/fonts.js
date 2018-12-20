@@ -1,23 +1,35 @@
-import TTFirsNeueMediumEOT from '../fonts/tt-firs-neue-medium.eot'
-import TTFirsNeueMediumSVG from '../fonts/tt-firs-neue-medium.svg'
-import TTFirsNeueMediumTTF from '../fonts/tt-firs-neue-medium.ttf'
-import TTFirsNeueMediumWOFF from '../fonts/tt-firs-neue-medium.woff'
-import TTFirsNeueMediumWOFF2 from '../fonts/tt-firs-neue-medium.woff2'
-import TTFirsNeueLightEOT from '../fonts/tt-firs-neue-light.eot'
-import TTFirsNeueLightSVG from '../fonts/tt-firs-neue-light.svg'
-import TTFirsNeueLightTTF from '../fonts/tt-firs-neue-light.ttf'
-import TTFirsNeueLightWOFF from '../fonts/tt-firs-neue-light.woff'
-import TTFirsNeueLightWOFF2 from '../fonts/tt-firs-neue-light.woff2'
+import VisbyCFHeavyEOT from '../fonts/visby-cf-heavy.eot'
+import VisbyCFHeavySVG from '../fonts/visby-cf-heavy.svg'
+import VisbyCFHeavyTTF from '../fonts/visby-cf-heavy.ttf'
+import VisbyCFHeavyWOFF from '../fonts/visby-cf-heavy.woff'
+import VisbyCFHeavyWOFF2 from '../fonts/visby-cf-heavy.woff2'
+
+import VisbyCFMediumEOT from '../fonts/visby-cf-medium.eot'
+import VisbyCFMediumSVG from '../fonts/visby-cf-medium.svg'
+import VisbyCFMediumTTF from '../fonts/visby-cf-medium.ttf'
+import VisbyCFMediumWOFF from '../fonts/visby-cf-medium.woff'
+import VisbyCFMediumWOFF2 from '../fonts/visby-cf-medium.woff2'
+
+import VisbyCFBoldEOT from '../fonts/visby-cf-bold.eot'
+import VisbyCFBoldSVG from '../fonts/visby-cf-bold.svg'
+import VisbyCFBoldTTF from '../fonts/visby-cf-bold.ttf'
+import VisbyCFBoldWOFF from '../fonts/visby-cf-bold.woff'
+import VisbyCFBoldWOFF2 from '../fonts/visby-cf-bold.woff2'
 
 export default {
-  TTFirsNeueMediumEOT,
-  TTFirsNeueMediumSVG,
-  TTFirsNeueMediumTTF,
-  TTFirsNeueMediumWOFF,
-  TTFirsNeueMediumWOFF2,
-  TTFirsNeueLightEOT,
-  TTFirsNeueLightSVG,
-  TTFirsNeueLightTTF,
-  TTFirsNeueLightWOFF,
-  TTFirsNeueLightWOFF2
+  VisbyCFHeavyEOT,
+  VisbyCFHeavySVG,
+  VisbyCFHeavyTTF,
+  VisbyCFHeavyWOFF,
+  VisbyCFHeavyWOFF2,
+  VisbyCFMediumEOT,
+  VisbyCFMediumSVG,
+  VisbyCFMediumTTF,
+  VisbyCFMediumWOFF,
+  VisbyCFMediumWOFF2,
+  VisbyCFBoldEOT,
+  VisbyCFBoldSVG,
+  VisbyCFBoldTTF,
+  VisbyCFBoldWOFF,
+  VisbyCFBoldWOFF2
 }

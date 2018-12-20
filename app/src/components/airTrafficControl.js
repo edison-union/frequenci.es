@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import AudioService from '../services/audio'
 import Song from '../services/song'
 import PQueue from 'p-queue'
 import Country from './country'
 import Navigation from './navigation'
 import { shuffle } from '../util/array'
+import { scale } from '../util/number'
 import { colours } from '../style/variables'
 import { above } from '../style/mixins'
 import _ from 'lodash'
@@ -23,22 +25,50 @@ class AirTrafficControl extends Component {
     };
   }
 
+  convertDistanceToSpatial(flight) {
+    const airport = flight.departure_airport.coordinates;
+    const height = flight.estDepartureAirportVertDistance;
+    const { mapBounds } = this.props;
+
+    const left = mapBounds.getSouthWest().lng();
+    const top = mapBounds.getSouthWest().lat();
+    const right = mapBounds.getNorthEast().lng();
+    const bottom = mapBounds.getNorthEast().lat();
+
+    return {
+      x: scale(airport.lng, left, right, -1, 1),
+      y: scale(airport.lat, top, bottom, -1, 1),
+      z: -scale(height, 0, 1000, 0, 1)
+    }
+  }
+
   addNewFlightsToBuffer() {
-    const { data } = this.props;
+    const { data, spatialAudioEnabled } = this.props;
     let buffer = this.state.flights
       .filter((flight) => !flight.processed)
       .map((flight) => {
-        const options = {
-          height: flight.estDepartureAirportVertDistance,
-          type: data.reduce((a, b) => {
-            if (flight.estDepartureAirport === b.gps_code) {
-              return b.type;
-            }
-            return a;
-          }, null)
-        }
+        // TODO:
+        // 1) Get location of airport
+        // 2) Get user_location
+        // 3) If the user's location isn't within the current country, give user the option to go to that country?
+        // 5) Map distance from  airport to user_location
+        // 5) Map distance to edge of marker bounds
+        // 6) Translate from km or metres to -1 to 1
+        // 7) Pass x/y/z to audio service
 
         if (!flight.processing) {
+          const options = {
+            height: flight.estDepartureAirportVertDistance,
+            spatialAudioEnabled: spatialAudioEnabled,
+            spatial_data: this.convertDistanceToSpatial(flight),
+            type: data.reduce((a, b) => {
+              if (flight.estDepartureAirport === b.gps_code) {
+                return b.type;
+              }
+              return a;
+            }, null)
+          }
+
           this.audioService.departureSound(options);
           flight.timestamp = new Date().getTime();
           flight.processing = true;
@@ -159,7 +189,17 @@ class AirTrafficControl extends Component {
   }
 }
 
-export default AirTrafficControl;
+const mapStateToProps = state => {
+  return {
+    spatialAudioEnabled: state.spatialAudioEnabled,
+    mapBounds: state.mapBounds,
+    markerBounds: state.markerBounds
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(AirTrafficControl)
 
 const Container = styled.section`
   display: flex;
@@ -178,7 +218,9 @@ const MapContainer = styled.div`
   width: 100vw;
   height: 103vh;
 `
+
 const Loading = styled(MapContainer)`
   background-color: ${colours.white};
 `
+
 const Map = styled(MapContainer)``

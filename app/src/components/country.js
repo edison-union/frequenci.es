@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import PropTypes from 'prop-types'
 import { MAP } from 'react-google-maps/lib/constants'
 import MapStyles from '../style/mapStyles'
 import { AirportConstants } from '../constants/airports'
 import _ from 'lodash'
+import { colours } from '../style/variables'
 
 class Country extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bounds: new google.maps.LatLngBounds(),
       ...props
     };
   }
@@ -26,16 +27,22 @@ class Country extends Component {
 
   componentDidMount() {
     // Extend the bounds of the map to the markers
-    const { data } = this.props;
+    const { data, setMarkerBounds, setMapCenter, setMapBounds } = this.props;
     data.map((airport) => {
       this.setState((prevState) => {
-        return { bounds: prevState.bounds.extend(new google.maps.LatLng(airport.coordinates.lat, airport.coordinates.lng)) }
+        return { markerBounds: prevState.markerBounds.extend(new google.maps.LatLng(airport.coordinates.lat, airport.coordinates.lng)) }
       });
     });
 
     const map = this.map.context[MAP];
-    map.setCenter(this.state.bounds.getCenter());
-    map.fitBounds(this.state.bounds);
+    map.setCenter(this.state.markerBounds.getCenter());
+    map.fitBounds(this.state.markerBounds);
+    setMarkerBounds(this.state.markerBounds);
+
+    google.maps.event.addListener(map, 'bounds_changed', () => {
+      setMapCenter(map.getCenter());
+      setMapBounds(map.getBounds());
+    });
   }
 
   getMarkerForAirport(airport) {
@@ -60,12 +67,20 @@ class Country extends Component {
 
   render() {
     const { data, center } = this.props;
+    const defaultOptions = {
+      styles: MapStyles,
+      disableDefaultUI: true,
+      backgroundColor: colours.map.water,
+    };
 
     return (<GoogleMap
       ref={(map) => { this.map = map; }}
-      defaultOptions={{ styles: MapStyles, disableDefaultUI: true }}
+      defaultOptions={defaultOptions}
       defaultZoom={5}
-      defaultCenter={center}>
+      defaultCenter={center}
+      options={{
+        ...defaultOptions
+      }}>
       {data.map((airport, index) => {
         return <Marker key={`${airport.gps_code}-${index}`}
           icon={this.getMarkerForAirport(airport)}
@@ -77,10 +92,46 @@ class Country extends Component {
 
 Country.propTypes = {
   data: PropTypes.array.isRequired,
+  setMarkerBounds: PropTypes.func.isRequired,
+  setMapBounds: PropTypes.func.isRequired,
+  setMapCenter: PropTypes.func.isRequired,
   center: PropTypes.shape({
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired
   }).isRequired
 }
 
-export default withScriptjs(withGoogleMap(Country));
+const mapStateToProps = state => {
+  return {
+    markerBounds: state.markerBounds || new google.maps.LatLngBounds(),
+    mapBounds: state.mapBounds
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setMarkerBounds: (bounds) => {
+      dispatch({
+        type: 'SET_MARKER_BOUNDS',
+        bounds: bounds
+      })
+    },
+    setMapBounds: (bounds) => {
+      dispatch({
+        type: 'SET_MAP_BOUNDS',
+        bounds: bounds
+      })
+    },
+    setMapCenter: (center) => {
+      dispatch({
+        type: 'SET_MAP_CENTER',
+        center: center
+      })
+    },
+  }
+}
+
+export default withScriptjs(withGoogleMap(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Country)))

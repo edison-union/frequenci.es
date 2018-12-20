@@ -2,15 +2,20 @@ export const colours = {
   black: '#000',
   white: '#fff',
   navigation: {
-    background:'#c9f5f5',
-    text: '#0B1F29',
-    border: '#fefefe',
-    background_hover: '#CDFAFA'
+    background:'#74ceb7',
+    text: '#001921',
+    background_hover: '#fefefe'
   },
   map: {
-    water: '#c9f5f5',
-    landscape: '#32b4c1',
-    road: '#5ed5de'
+    water: '#74ceb7',
+    landscape: '#74ceb7',
+    road: '#74ceb7'
+  },
+  button: {
+    background: '#74ceb7',
+    hover: '#7ddec5',
+    text: '#001921',
+    border: '#66B5A1'
   }
 }
 
@@ -40,7 +45,7 @@ export const typography = {
 }
 
 export const fonts = {
-  title: "'TT Firs Neue Medium', sans-serif",
-  subtitle: "'TT Firs Neue Light', sans-serif",
-  body: "Georgia, serif"
+  title: "'Visby CF Bold', sans-serif",
+  body: "'Visby CF Medium', sans-serif",
+  button: "'Visby CF Bold', sans-serif"
 }

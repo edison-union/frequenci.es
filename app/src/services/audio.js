@@ -1,5 +1,6 @@
 import BufferLoader from './buffer'
 import { AirportConstants } from '../constants/airports'
+import { scale } from '../util/number'
 
 class AudioService {
   constructor() {
@@ -85,21 +86,37 @@ class AudioService {
       return a;
     }, 0);
 
-    const value = this.map(height, 0, process.env.AIRCRAFT_CEILING, 0, max);
+    const value = scale(height, 0, process.env.AIRCRAFT_CEILING, 0, max);
 
     return value > max ? max : Math.round(value);
-  }
-
-  map(value, start1, stop1, start2, stop2) {
-    return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
   }
 
   departureSound(options) {
     const source = this.context.createBufferSource();
     const group = Object.keys(AirportConstants).indexOf(options.type);
     const sound = this.mapHeightToNote(options.height);
+    const panner = new PannerNode(this.context, {
+      panningModel: 'HRTF',
+      distanceModel: 'linear',
+      positionX: options.spatial_data.x,
+      positionY: 0, //options.spatial_data.y,
+      positionZ: 0, //options.spatial_data.z,
+      refDistance: 0,
+      maxDistance: 10,
+      rolloffFactor: 2,
+      coneInnerAngle: 30,
+      coneOuterAngle: 40,
+      coneOuterGain: .7
+    });
+
     source.buffer = this.buffer[group][sound];
-    source.connect(this.context.destination);
+
+    if (options.spatialAudioEnabled) {
+      source.connect(panner).connect(this.context.destination);
+    } else {
+      source.connect(this.context.destination);
+    }
+
     source.start();
   }
 
