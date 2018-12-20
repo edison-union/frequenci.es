@@ -37,6 +37,12 @@ class Country extends Component {
     const map = this.map.context[MAP];
     map.setCenter(this.state.markerBounds.getCenter());
     map.fitBounds(this.state.markerBounds);
+
+    const div = map.getDiv();
+
+  div.firstChild.style.backgroundColor = colours.map.water;
+    //div.firstChild.styleList.add({ backgroundColor: colours.map.water });
+    //console.log(map.firstChild.styleList);
     setMarkerBounds(this.state.markerBounds);
 
     google.maps.event.addListener(map, 'bounds_changed', () => {

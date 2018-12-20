@@ -211,7 +211,7 @@ const MapContainer = styled.div`
 `
 
 const Loading = styled(MapContainer)`
-  background-color: ${colours.white};
+  background-color: ${colours.map.water};
 `
 
 const Map = styled(MapContainer)``

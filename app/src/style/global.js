@@ -52,7 +52,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${fonts.body};
     font-size: ${typography.body};
     font-weight: 300;
-    letter-spacing: .025rem;
+    letter-spacing: .015rem;
     line-height: 1.65;
     overflow-x: hidden;
   }

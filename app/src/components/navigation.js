@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import FlightBoard from './flightBoard'
 import SpatialAudio from './spatialAudio'
 import Info from './info'
+import Search from './search'
 import { colours, spacing, timings } from '../style/variables'
 import { above } from '../style/mixins'
 import * as iconDepartures from '../images/icon-departures.svg'
 import * as iconRadar from '../images/icon-radar.svg'
 import * as iconInfo from '../images/icon-info.svg'
+import * as iconSearch from '../images/icon-search.svg'
 
 class Navigation extends Component {
   constructor(props) {
@@ -36,18 +38,24 @@ class Navigation extends Component {
         <List>
           <ListItem>
             <Button className={ this.state.childActive === 0 ? 'is-active' : '' } onClick={() => this.toggleChild(0)}>
+              <Icon src={iconSearch}/>
+            </Button>
+            <Search />
+          </ListItem>
+          <ListItem>
+            <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
               <Icon src={iconDepartures}/>
             </Button>
             <FlightBoard {...this.props} {...this.state}/>
           </ListItem>
           <ListItem>
-            <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
+            <Button className={ this.state.childActive === 2 ? 'is-active' : '' } onClick={() => this.toggleChild(2)}>
               <Icon src={iconRadar}/>
             </Button>
             <SpatialAudio {...this.props} {...this.state}/>
           </ListItem>
           <ListItem>
-            <Button className={ this.state.childActive === 2 ? 'is-active' : '' } onClick={() => this.toggleChild(2)}>
+            <Button className={ this.state.childActive === 3 ? 'is-active' : '' } onClick={() => this.toggleChild(3)}>
               <Icon src={iconInfo}/>
             </Button>
             <Info />
@@ -59,7 +67,7 @@ class Navigation extends Component {
 }
 
 const Container = styled.nav`
-  background: ${colours.navigation.background};
+  background-color: ${colours.navigation.background};
   color: ${colours.navigation.text};
   position: absolute;
   right: 0;
@@ -77,7 +85,6 @@ const List = styled.ul`
 `
 
 const ListItem = styled.li`
-  background: ${colours.navigation.background};
   display: flex;
 `
 
@@ -87,7 +94,7 @@ const Icon = styled.img`
 `
 
 const Button = styled.button`
-  background: none;
+  background-color: transparent;
   border: 0;
   display: block;
   outline: 0;
@@ -95,7 +102,7 @@ const Button = styled.button`
 
   &:hover,
   &.is-active {
-    background: ${colours.navigation.background_hover};
+    background-color: ${colours.navigation.background_hover};
   }
 
   & + * {

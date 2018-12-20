@@ -1,6 +1,7 @@
 export const colours = {
   black: '#000',
   white: '#fff',
+  heading: '#66B5A1',
   navigation: {
     background:'#74ceb7',
     text: '#001921',
@@ -14,8 +15,8 @@ export const colours = {
   button: {
     background: '#74ceb7',
     hover: '#7ddec5',
-    text: '#001921',
-    border: '#66B5A1'
+    text: '#fff',
+    shadow: '#ebebeb'
   }
 }
 
@@ -45,7 +46,7 @@ export const typography = {
 }
 
 export const fonts = {
-  title: "'Visby CF Bold', sans-serif",
-  body: "'Visby CF Medium', sans-serif",
+  title: "'Visby CF Heavy', sans-serif",
+  body: "'Bitter', serif",
   button: "'Visby CF Bold', sans-serif"
 }

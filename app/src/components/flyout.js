@@ -20,12 +20,15 @@ const Container = styled.section`
   flex: 1;
   padding: ${spacing.default};
   overflow-y: auto;
-  width: 100%;
+  width: calc(100vw - 32px - ${spacing.default} - ${spacing.default});
+  min-height: 100vh;
+
 
   ${gpuStyles``}
 
   ${above.md`
     width: 24rem;
+    min-height: 30rem;
   `}
 `
 

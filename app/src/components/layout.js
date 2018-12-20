@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
+import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
 const Layout = ({ children }) => (
@@ -49,8 +50,9 @@ const Layout = ({ children }) => (
               { name: "google-site-verification", content: data.site.siteMetadata.google_site_verification }
             ]}
           >
-            <html lang="en" />
+            <html lang="en" style={{ backgroundColor: colours.map.water }}/>
             <link rel="canonical" href="https://frequenci.es/" />
+            <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet" />
           </Helmet>
           <GlobalStyle/>
           <div>
