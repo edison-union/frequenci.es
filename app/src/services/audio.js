@@ -98,9 +98,9 @@ class AudioService {
     const panner = new PannerNode(this.context, {
       panningModel: 'HRTF',
       distanceModel: 'linear',
-      positionX: options.spatial_data.x,
-      positionY: 0, //options.spatial_data.y,
-      positionZ: 0, //options.spatial_data.z,
+      positionX: options.spatialData.x,
+      positionY: options.spatialData.y,
+      positionZ: options.spatialData.z,
       refDistance: 0,
       maxDistance: 10,
       rolloffFactor: 2,

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { above } from '../style/mixins'
+import { above, gpuStyles } from '../style/mixins'
 import { colours, spacing } from '../style/variables'
 
 const Flyout = ({ children }) => {
@@ -21,9 +21,8 @@ const Container = styled.section`
   padding: ${spacing.default};
   overflow-y: auto;
   width: 100%;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000;
+
+  ${gpuStyles``}
 
   ${above.md`
     width: 24rem;

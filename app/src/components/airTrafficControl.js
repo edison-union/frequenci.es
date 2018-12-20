@@ -47,20 +47,11 @@ class AirTrafficControl extends Component {
     let buffer = this.state.flights
       .filter((flight) => !flight.processed)
       .map((flight) => {
-        // TODO:
-        // 1) Get location of airport
-        // 2) Get user_location
-        // 3) If the user's location isn't within the current country, give user the option to go to that country?
-        // 5) Map distance from  airport to user_location
-        // 5) Map distance to edge of marker bounds
-        // 6) Translate from km or metres to -1 to 1
-        // 7) Pass x/y/z to audio service
-
         if (!flight.processing) {
           const options = {
             height: flight.estDepartureAirportVertDistance,
             spatialAudioEnabled: spatialAudioEnabled,
-            spatial_data: this.convertDistanceToSpatial(flight),
+            spatialData: this.convertDistanceToSpatial(flight),
             type: data.reduce((a, b) => {
               if (flight.estDepartureAirport === b.gps_code) {
                 return b.type;

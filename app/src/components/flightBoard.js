@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classNames from 'classnames'
+import { gpuStyles } from '../style/mixins'
 import { colours, spacing, timings } from '../style/variables'
 import { AirportConstants } from '../constants/airports'
 import { Heading } from './shared'
@@ -67,12 +68,13 @@ const Flight = styled.div`
   flex-direction: column;
   min-height: min-content;
   font-size: .8rem;
-  margin-bottom: ${spacing.xs};
   padding: ${spacing.xs} ${spacing.sm};
   transform: rotateX(-90deg);
   transition: transform ${timings.sm}s ease-out, opacity ${timings.lg}s ease-out;
   width: 100%;
   box-sizing: border-box;
+
+  ${gpuStyles``}
 
   ${props => props.types.map((type) => {
     if (props.activeType === type) {
@@ -88,6 +90,10 @@ const Flight = styled.div`
 
   &.is-old {
     opacity: .8;
+  }
+
+  & + & {
+    margin-top: ${spacing.xs};
   }
 `
 
