@@ -80,7 +80,7 @@ class CountryTemplate extends React.Component {
     return (
       <Layout location={location}>
         <Helmet>
-          <title>{`🛫 ${pageContext.name} 🎶`}</title>
+          <title>{`${pageContext.name} 🛫🎶 frequenci.es`}</title>
           <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
           <meta name="og:image" url={this.getStaticMapUrl(pageContext.center)}/>
         </Helmet>

@@ -4,7 +4,7 @@
     <animateTransform attributeName="transform"
      type="scale"
      additive="sum"
-     values="1;12;1;11;1;10;1;9;1;8;1;7;1;6;1;6;1;4;1;3;1;2;1"
+     values="1;4;1;3.75;1;3.5;1;3.25;1;3;1;2.75;1;2.5;1;2.25;1;2;1;1.75;1;1.5;1;1.25;1"
      begin="0s"
      dur="4s"
    />

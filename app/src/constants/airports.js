@@ -39,9 +39,9 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/warble-c.wav',
-      '/sounds/warble-d.wav',
-      '/sounds/warble-e.wav'
+      '/sounds/whale-c.wav',
+      '/sounds/whale-d.wav',
+      '/sounds/whale-e.wav'
     ],
   },
   small_airport: {
@@ -58,9 +58,9 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/hum-c.wav',
-      '/sounds/hum-d.wav',
-      '/sounds/hum-e.wav'
+      '/sounds/warble-c.wav',
+      '/sounds/warble-d.wav',
+      '/sounds/warble-e.wav'
     ],
   }
 }

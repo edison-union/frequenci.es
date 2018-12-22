@@ -44,7 +44,7 @@ class FlightBoard extends Component {
                 'is-old': Date.now() - flight.timestamp > this.song.getBars(2)
               })} types={Object.keys(AirportConstants)} activeType={flight.departure_airport.type} key={`${flight.callsign}-${i}`}>
                 <FlightCallsign>{flight.callsign ? flight.callsign : '-' }</FlightCallsign>
-                <FlightAirport>{flight.departure_airport.name}{flight.arrival_airport ? ` - ${flight.arrival_airport.name}` : ``}</FlightAirport>
+                <FlightAirport>{flight.departure_airport.name}</FlightAirport>
             </Flight>)
           }
           return false;

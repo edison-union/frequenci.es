@@ -64,6 +64,7 @@ class AirTrafficControl extends Component {
           flight.timestamp = new Date().getTime();
           flight.processing = true;
         }
+
         return flight;
       });
 
@@ -79,11 +80,17 @@ class AirTrafficControl extends Component {
   }
 
   clearBuffer() {
-    const expired = this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) });
+    const notExpired = this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) });
 
-    if (!_.isEqual(expired, this.state.buffer)) {
-      this.setState({
-        buffer: this.state.buffer.filter((flight) => { return !this.isDecayedFlight(flight) })
+    if (!_.isEqual(notExpired, this.state.buffer)) {
+      this.setState((prevState) => {
+        return {
+          buffer: notExpired,
+          flights: prevState.flights.map((flight) => {
+            flight.processed = this.isDecayedFlight(flight);
+            return flight;
+          })
+        }
       });
     }
   }
@@ -138,7 +145,7 @@ class AirTrafficControl extends Component {
     const { data } = this.props;
     const now = moment();
 
-    data.sort(shuffle).forEach((airport) => {
+    shuffle(data).forEach((airport) => {
       const time = now.clone();
       time.tz(airport.timezone_id);
       const end = time.unix();
