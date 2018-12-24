@@ -18,13 +18,13 @@ class AudioService {
 
   createNoiseGen(frequency) {
     const gain = this.context.createGain();
-    gain.gain.value = 0.15;
+    gain.gain.value = 0.775;
     gain.connect(this.context.destination);
     const filter = this.context.createBiquadFilter();
     const panner = this.context.createPanner();
     const bufferLen = 4096;
-    const max = 20;
-    const min = -20;
+    const max = 30;
+    const min = -30;
 
     let x = this.rand(min, max);
     let y = this.rand(min, max);
@@ -51,9 +51,9 @@ class AudioService {
     this.noiseNodes.push(noise);
 
     setInterval(() => {
-      x = x + this.rand(-0.1, 0.1);
-      y = y + this.rand(-0.1, 0.1);
-      z = z + this.rand(-0.1, 0.1);
+      x = x + this.rand(-0.2, 0.2);
+      y = y + this.rand(-0.2, 0.2);
+      z = z + this.rand(-0.2, 0.2);
       panner.setPosition(x, y, z);
     }, 500);
   }
@@ -67,7 +67,7 @@ class AudioService {
   }
 
   backgroundSound() {
-    const note = 55;
+    const note = 50;
     const scale = [0.0, 2.0, 4.0];
     const oscillators = 25;
     for (let i = 0; i < oscillators; i++) {
