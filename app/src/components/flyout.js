@@ -11,24 +11,25 @@ const Flyout = ({ children }) => {
 export default Flyout
 
 const Container = styled.section`
+  align-items: center;
   background-color: ${colours.navigation.background_hover};
   box-sizing: border-box;
-  align-items: center;
   color: ${colours.navigation.text};
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: ${spacing.default};
-  overflow-y: auto;
-  width: calc(100vw - 32px - ${spacing.default} - ${spacing.default});
+  max-height: 100vh;
   min-height: 100vh;
-
+  overflow-y: auto;
+  overflow-y: auto;
+  padding: ${spacing.default};
+  width: calc(100vw - 32px - ${spacing.default} - ${spacing.default});
 
   ${gpuStyles``}
 
   ${above.md`
     width: 24rem;
-    min-height: 30rem;
+    min-height: 21.25rem;
   `}
 `
 

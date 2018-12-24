@@ -22,7 +22,11 @@ export const AirportConstants = {
     sounds: [
       '/sounds/ping-c.wav',
       '/sounds/ping-d.wav',
-      '/sounds/ping-e.wav'
+      '/sounds/ping-e.wav',
+      '/sounds/ping-f.wav',
+      '/sounds/ping-g.wav',
+      '/sounds/ping-a.wav',
+      '/sounds/ping-b.wav'
     ],
   },
   medium_airport: {
@@ -41,7 +45,11 @@ export const AirportConstants = {
     sounds: [
       '/sounds/whale-c.wav',
       '/sounds/whale-d.wav',
-      '/sounds/whale-e.wav'
+      '/sounds/whale-e.wav',
+      '/sounds/whale-f.wav',
+      '/sounds/whale-g.wav',
+      '/sounds/whale-a.wav',
+      '/sounds/whale-b.wav'
     ],
   },
   small_airport: {
@@ -58,9 +66,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/warble-c.wav',
-      '/sounds/warble-d.wav',
-      '/sounds/warble-e.wav'
+      '/sounds/grind-c.wav',
+      '/sounds/grind-d.wav',
+      '/sounds/grind-e.wav',
+      '/sounds/grind-e.wav',
+      '/sounds/grind-e.wav',
+      '/sounds/grind-e.wav',
+      '/sounds/grind-e.wav'
     ],
   }
 }
