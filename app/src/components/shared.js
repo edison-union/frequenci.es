@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colours, fonts, spacing } from '../style/variables'
+import { colours, fonts, spacing, timings } from '../style/variables'
 
 export const Heading = styled.h4`
   align-self: start;
@@ -7,6 +7,7 @@ export const Heading = styled.h4`
 `
 
 export const Subheading = styled.h5`
+  color: ${colours.subheading};
   align-self: start;
   margin-bottom: .5rem;
   margin-top: .75rem;
@@ -35,7 +36,17 @@ export const Button = styled.button`
 `
 
 export const Link = styled.a`
-  &:hover {
+  color: ${colours.link.default};
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 0 0 currentColor;
+  transition: color ${timings.md}s ease-out, border ${timings.md}s ease-out;
 
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 2px 0 0 currentColor;
+    border-bottom: 4px solid ${colours.white};
+    color: ${colours.link.hover};
   }
 `

@@ -1,7 +1,8 @@
 export const colours = {
   black: '#000',
   white: '#fff',
-  heading: '#66B5A1',
+  heading: '#2C858D',
+  subheading: '#004056',
   navigation: {
     background:'#74ceb7',
     text: '#001921',
@@ -13,10 +14,14 @@ export const colours = {
     road: '#74ceb7'
   },
   button: {
-    background: '#74ceb7',
-    hover: '#7ddec5',
+    background: '#004056',
+    hover: '#2C858D',
     text: '#fff',
     shadow: '#ebebeb'
+  },
+  link: {
+    default: '#2C858D',
+    hover: '#004056'
   }
 }
 

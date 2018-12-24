@@ -52,7 +52,7 @@ const Layout = ({ children }) => (
           >
             <html lang="en" style={{ backgroundColor: colours.map.water }}/>
             <link rel="canonical" href="https://frequenci.es/" />
-            <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet" />
           </Helmet>
           <GlobalStyle/>
           <div>

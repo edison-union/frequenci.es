@@ -44,6 +44,8 @@ class AirTrafficControl extends Component {
 
   addNewFlightsToBuffer() {
     const { data, spatialAudioEnabled } = this.props;
+    let index = 0;
+
     let buffer = this.state.flights
       .filter((flight) => !flight.processed)
       .map((flight) => {
@@ -52,6 +54,7 @@ class AirTrafficControl extends Component {
             height: flight.estDepartureAirportVertDistance,
             spatialAudioEnabled: spatialAudioEnabled,
             spatialData: this.convertDistanceToSpatial(flight),
+            offset: this.song.getNoteDelay(index, 8),
             type: data.reduce((a, b) => {
               if (flight.estDepartureAirport === b.gps_code) {
                 return b.type;
@@ -63,6 +66,7 @@ class AirTrafficControl extends Component {
           this.audioService.departureSound(options);
           flight.timestamp = new Date().getTime();
           flight.processing = true;
+          index++;
         }
 
         return flight;
