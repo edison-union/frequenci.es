@@ -67,7 +67,7 @@ class AudioService {
   }
 
   backgroundSound() {
-    const note = 50;
+    const note = 60;
     const scale = [0.0, 2.0, 4.0];
     const oscillators = 25;
     for (let i = 0; i < oscillators; i++) {
