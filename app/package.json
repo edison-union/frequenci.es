@@ -8,6 +8,7 @@
     "eslint": "^5.10.0",
     "gatsby": "^2.0.64",
     "gatsby-image": "^2.0.22",
+    "gatsby-plugin-core-js": "^1.0.2",
     "gatsby-plugin-google-analytics": "^2.0.8",
     "gatsby-plugin-manifest": "^2.0.11",
     "gatsby-plugin-netlify": "^2.0.6",
@@ -23,6 +24,7 @@
     "lodash": "^4.17.11",
     "moment-timezone": "^0.5.23",
     "p-queue": "^3.0.0",
+    "phantomjs": "^2.1.7",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-geocode": "^0.1.2",
@@ -40,6 +42,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node ./build.js && gatsby build",
+    "screenshots": "phantomjs screenshots.js",
     "develop": "gatsby develop",
     "start": "npm run develop",
     "test": "echo \"Error: no test specified\" && exit 1"

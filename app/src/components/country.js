@@ -48,6 +48,7 @@ class Country extends Component {
     google.maps.event.addListener(map, 'bounds_changed', () => {
       setMapCenter(map.getCenter());
       setMapBounds(map.getBounds());
+      window.frequencies = true;
     });
   }
 
