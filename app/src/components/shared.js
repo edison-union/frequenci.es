@@ -15,6 +15,7 @@ export const Subheading = styled.h5`
 
 export const Copy = styled.p`
   align-self: start;
+  color: ${colours.copy};
   margin: 0 0 1rem;
   font-size: 1rem;
 `
@@ -54,7 +55,17 @@ export const Link = styled.a`
 export const Input = styled.input`
   box-sizing: border-box;
   display: flex;
-  margin-bottom: ${spacing.xs};
+  font-family: ${fonts.button};
+  font-size: 1.4rem;
+  font-weight: 700;
   padding: ${spacing.sm};
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  & + * {
+    margin-top: ${spacing.default};
+  }
 `

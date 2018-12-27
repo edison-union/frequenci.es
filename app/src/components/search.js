@@ -33,6 +33,10 @@ class Search extends Component {
   }
 
   render() {
+    if (this.props.childActive === 0) {
+      this.inputRef.focus();
+    }
+
     return (<Flyout>
       <Heading>Search</Heading>
       <Input ref={(ref) => { this.inputRef = ref; }} onKeyUp={(e) => { this.handleKeyDown(e) }}/>
@@ -47,7 +51,8 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  countries: PropTypes.array.isRequired
+  countries: PropTypes.array.isRequired,
+  childActive: PropTypes.number.isRequired
 }
 
 export default Search
@@ -73,7 +78,8 @@ const Country = styled(Link)`
   }
 
   &:focus {
-    outline: none;
+    background-color: ${colours.button.hover};
+    outline: 1px dotted ${colours.button.hover};
   }
 
   & + & {
@@ -82,6 +88,7 @@ const Country = styled(Link)`
 `
 
 const CountryName = styled.strong`
+  font-size: 1rem;
   font-weight: 600;
 `
 

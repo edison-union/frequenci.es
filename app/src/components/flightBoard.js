@@ -62,8 +62,6 @@ FlightBoard.propTypes = {
 export default FlightBoard
 
 const Flight = styled.div`
-  background-color: ${colours.white};
-  color: ${colours.black};
   display: flex;
   flex-direction: column;
   min-height: min-content;

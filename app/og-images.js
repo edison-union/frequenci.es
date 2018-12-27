@@ -6,7 +6,7 @@ let page, country;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  if (process.argv.length) {
+  if (process.argv.length > 2) {
     countries = countries.filter((country) => process.argv.indexOf(country.country.toLowerCase()) !== -1);
   }
 

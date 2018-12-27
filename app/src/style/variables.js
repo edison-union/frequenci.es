@@ -1,27 +1,27 @@
 export const colours = {
-  black: '#000',
   white: '#fff',
-  heading: '#2C858D',
-  subheading: '#004056',
+  heading: '#191512',
+  subheading: '#241e19',
+  copy: '#54473a',
   navigation: {
-    background:'#74ceb7',
+    background: '#f6f7f2',
     text: '#001921',
-    background_hover: '#fefefe'
+    background_hover: '#fffffb',
+    shadow: '#ecede8'
   },
   map: {
-    water: '#74ceb7',
-    landscape: '#79D6BE',
-    road: '#74ceb7'
+    water: '#f6f7f2',
+    landscape: '#fffffb',
+    road: '#f6f7f2'
   },
   button: {
-    background: '#004056',
-    hover: '#2C858D',
-    text: '#fff',
-    shadow: '#ebebeb'
+    background: '#3FB0A9',
+    hover: '#42BAB3',
+    text: '#fffffb'
   },
   link: {
-    default: '#2C858D',
-    hover: '#004056'
+    default: '#544f4a',
+    hover: '#bcb4ab'
   }
 }
 
@@ -52,6 +52,6 @@ export const typography = {
 
 export const fonts = {
   title: "'Visby CF Heavy', sans-serif",
-  body: "'Bitter', serif",
+  body: "Lora, serif",
   button: "'Visby CF Bold', sans-serif"
 }

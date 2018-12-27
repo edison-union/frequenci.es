@@ -61,7 +61,7 @@ class Country extends Component {
 
       if (!hasZoomed) {
         hasZoomed = true;
-        map.setZoom(map.getZoom()+.25);
+        map.setZoom(map.getZoom()+.1);
       }
     });
   }
@@ -125,7 +125,7 @@ Country.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    markerBounds: state.markerBounds || new google.maps.LatLngBounds(),
+    markerBounds: new google.maps.LatLngBounds(),
     mapBounds: state.mapBounds
   }
 }

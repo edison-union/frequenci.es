@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 
-import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
 const getPageTitle = (pageContext, defaultTitle) => {
@@ -65,8 +64,8 @@ const Layout = ({ children, pageContext, location }) => (
               { name: "google-site-verification", content: data.site.siteMetadata.google_site_verification }
             ]}
           >
-            <html lang="en" style={{ backgroundColor: colours.map.water }}/>
-            <link href="https://fonts.googleapis.com/css?family=Bitter:400,700" rel="stylesheet" />
+            <html lang="en"/>
+            <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet" />
           </Helmet>
           <GlobalStyle/>
           <div>
