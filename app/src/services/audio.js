@@ -18,7 +18,7 @@ class AudioService {
 
   createNoiseGen(frequency) {
     const gain = this.context.createGain();
-    gain.gain.value = 0.775;
+    gain.gain.value = 0.25;
     gain.connect(this.context.destination);
     const filter = this.context.createBiquadFilter();
     const panner = this.context.createPanner();
@@ -32,9 +32,9 @@ class AudioService {
     panner.setPosition(x, y, z);
     panner.connect(gain);
 
-    filter.type = filter.BANDPASS;
+    filter.type = filter.ALLPASS;
     filter.frequency.value = frequency;
-    filter.Q.value = 30;
+    filter.Q.value = 20;
     filter.connect(panner);
 
     const noise = this.context.createScriptProcessor(bufferLen, 1, 2);
@@ -51,9 +51,9 @@ class AudioService {
     this.noiseNodes.push(noise);
 
     setInterval(() => {
-      x = x + this.rand(-0.2, 0.2);
-      y = y + this.rand(-0.2, 0.2);
-      z = z + this.rand(-0.2, 0.2);
+      x = x + this.rand(-0.1, 0.1);
+      y = y + this.rand(-0.1, 0.1);
+      z = z + this.rand(-0.1, 0.1);
       panner.setPosition(x, y, z);
     }, 500);
   }
@@ -62,17 +62,11 @@ class AudioService {
     return Math.random() * (max - min) + min;
   }
 
-  mtof(m) {
-    return Math.pow(2, (m - 69) / 12) * 440;
-  }
-
   backgroundSound() {
-    const note = 60;
-    const scale = [0.0, 2.0, 4.0];
-    const oscillators = 25;
+    const note = 70;
+    const oscillators = 40;
     for (let i = 0; i < oscillators; i++) {
-      var degree = Math.floor(Math.random() * scale.length);
-      var frequency = this.mtof(note + scale[degree]);
+      var frequency = Math.pow(2, (note - 69) / 12) * 440
       frequency += Math.random() * 4 - 2;
       this.createNoiseGen(frequency);
     }
