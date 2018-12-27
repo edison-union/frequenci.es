@@ -50,6 +50,7 @@ exports.createPages = ({ graphql, actions }) => {
             context: {
               id: edge.node.id,
               name: edge.node.name,
+              code: edge.node.country.toLowerCase(),
               center: edge.node.center
             },
           })
