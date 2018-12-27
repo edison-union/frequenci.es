@@ -18,6 +18,10 @@ const getPageOpenGraphImage = (baseUrl, pageContext, alt) => {
   return pageContext ? `${baseUrl}/og-images/${pageContext.code}.png` : alt
 }
 
+const getPageUrl = (pageContext, defaultUrl) => {
+  return pageContext ? `${defaultUrl}/${pageContext.code}/` : defaultUrl;
+}
+
 const Layout = ({ children, pageContext, location }) => (
     <StaticQuery
       query={graphql`
@@ -51,7 +55,7 @@ const Layout = ({ children, pageContext, location }) => (
               { name: "twitter:image:src", content: getPageOpenGraphImage(data.site.siteMetadata.siteUrl, pageContext, data.site.siteMetadata.og.image) },
               { property: "og:title", content: getPageTitle(pageContext) },
               { property: "og:type", content: "website" },
-              { property: "og:url", content: `${data.site.siteMetadata.siteUrl}`},
+              { property: "og:url", content: getPageUrl(pageContext, data.site.siteMetadata.siteUrl) },
               { property: "og:image", content: getPageOpenGraphImage(data.site.siteMetadata.siteUrl, pageContext, data.site.siteMetadata.og.image) },
               { property: "og:image:type", content: "image/png" },
               { property: "og:image:width", content: "1200" },
