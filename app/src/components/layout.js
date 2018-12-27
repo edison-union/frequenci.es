@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import { GlobalStyle } from '../style/global.js'
-import * as loader from '../images/loader.svg'
 
 const getPageTitle = (pageContext, defaultTitle) => {
   return pageContext ? `${pageContext.name} » frequenci.es` : defaultTitle;
@@ -43,16 +42,6 @@ const Layout = ({ children, pageContext, location }) => (
       render={data => (
         <>
           <Helmet
-            style={[{
-              'cssText': `
-                html {
-                  background-image: url(${loader});
-                  background-repeat: no-repeat;
-                  background-position: 50% 50%;
-                  width: 100%;
-                  height: 100%;
-                }`
-              }]}
             title={ getPageTitle(pageContext, data.site.siteMetadata.title) }
             meta={[
               { name: 'description', content: getPageDescription(pageContext, data.site.siteMetadata.description) },

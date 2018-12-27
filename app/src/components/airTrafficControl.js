@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import AudioService from '../services/audio'
 import Song from '../services/song'
@@ -12,7 +13,7 @@ import { shuffle } from '../util/array'
 import { scale } from '../util/number'
 import { colours } from '../style/variables'
 import { above } from '../style/mixins'
-import _ from 'lodash'
+import * as spinner from '../images/icon-spinner.svg'
 
 class AirTrafficControl extends Component {
   constructor() {
@@ -225,6 +226,10 @@ const MapContainer = styled.div`
 
 const Loading = styled(MapContainer)`
   background-color: ${colours.map.water};
+  background-image: url(${spinner});
+  background-position: 50% 48%;
+  background-repeat: no-repeat;
+  background-size: 3rem;
 `
 
 const Map = styled(MapContainer)``
