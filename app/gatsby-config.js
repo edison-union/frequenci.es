@@ -9,7 +9,7 @@ module.exports = {
     description: 'A data sonification of flight departures from around the world',
     siteUrl: 'https://frequenci.es',
     keywords: 'Data sonification, airports, music for airports, ambient, flight patterns, departures',
-    google_site_verification: 'MJDFKPslztppagIFWP9KbeVemhd_jI70eeatBQ3-bRo',
+    google_site_verification: 'xojYv-QrCVOoJEDqvRH7TGN9Fw-30PBeQUmS9wNCGg4',
     og: {
       image: 'https://frequenci.es/images/og-image.png'
     }

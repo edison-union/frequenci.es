@@ -6,12 +6,12 @@ import { StaticQuery, graphql } from 'gatsby'
 import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
-const getPageTitle = (pageContext) => {
-  return pageContext ? `${pageContext.name} » frequenci.es` : 'frequenci.es';
+const getPageTitle = (pageContext, defaultTitle) => {
+  return pageContext ? `${pageContext.name} » frequenci.es` : defaultTitle;
 }
 
-const getPageDescription = (pageContext) => {
-  return pageContext ? `A data sonification of flight departures in ${pageContext.name}` : 'Music from airports'
+const getPageDescription = (pageContext, defaultDescription) => {
+  return pageContext ? `A data sonification of flight departures in ${pageContext.name}` : defaultDescription
 }
 
 const getPageOpenGraphImage = (baseUrl, pageContext, alt) => {
@@ -44,23 +44,23 @@ const Layout = ({ children, pageContext, location }) => (
       render={data => (
         <>
           <Helmet
-            title={ getPageTitle(pageContext) }
+            title={ getPageTitle(pageContext, data.site.siteMetadata.title) }
             meta={[
-              { name: 'description', content: getPageDescription(pageContext) },
+              { name: 'description', content: getPageDescription(pageContext, data.site.siteMetadata.description) },
               { name: 'keywords', content: data.site.siteMetadata.keywords },
               { itemprop: "image", content: data.site.siteMetadata.og.image },
               { name: "twitter:card", content: "summary_large_image" },
-              { name: "twitter:title", content: getPageTitle(pageContext) },
-              { name: "twitter:description", content: getPageDescription(pageContext) },
+              { name: "twitter:title", content: getPageTitle(pageContext, data.site.siteMetadata.title) },
+              { name: "twitter:description", content: getPageDescription(pageContext, data.site.siteMetadata.description) },
               { name: "twitter:image:src", content: getPageOpenGraphImage(data.site.siteMetadata.siteUrl, pageContext, data.site.siteMetadata.og.image) },
-              { property: "og:title", content: getPageTitle(pageContext) },
+              { property: "og:title", content: getPageTitle(pageContext, data.site.siteMetadata.title) },
               { property: "og:type", content: "website" },
               { property: "og:url", content: getPageUrl(pageContext, data.site.siteMetadata.siteUrl) },
               { property: "og:image", content: getPageOpenGraphImage(data.site.siteMetadata.siteUrl, pageContext, data.site.siteMetadata.og.image) },
               { property: "og:image:type", content: "image/png" },
               { property: "og:image:width", content: "1200" },
               { property: "og:image:height", content: "630" },
-              { property: "og:description", content: getPageDescription(pageContext) },
+              { property: "og:description", content: getPageDescription(pageContext, data.site.siteMetadata.description) },
               { property: "og:site_name", content: data.site.siteMetadata.name },
               { name: "google-site-verification", content: data.site.siteMetadata.google_site_verification }
             ]}
