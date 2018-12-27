@@ -1,7 +1,6 @@
 import * as PropTypes from 'prop-types'
 import React from 'react'
 import { graphql } from 'gatsby'
-import Helmet from 'react-helmet'
 import Layout from '../components/layout'
 import AirTrafficControl from '../components/airTrafficControl'
 import { AirportConstants } from '../constants/airports'
