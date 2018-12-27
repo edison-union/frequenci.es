@@ -105,6 +105,7 @@ class Country extends Component {
       {data.map((airport, index) => {
         return <Marker key={`${airport.gps_code}-${index}`}
           icon={this.getMarkerForAirport(airport)}
+          onClick={() => console.log(airport)}
           position={airport.coordinates} />
       })}
     </GoogleMap>);
