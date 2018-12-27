@@ -1,10 +1,14 @@
-const countries = require('./data/airports.json')
+let countries = require('./data/airports.json')
 const puppeteer = require('puppeteer')
 let page, country;
 
 (async() => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+
+  if (process.argv.length) {
+    countries = countries.filter((country) => process.argv.indexOf(country.country.toLowerCase()) !== -1);
+  }
 
   for (let x = 0 ; x < countries.length; x++) {
     const { name, country } = countries[x];
