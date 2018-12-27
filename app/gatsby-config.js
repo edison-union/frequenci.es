@@ -4,14 +4,14 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    name: 'Frequencies',
-    title: 'Frequencies',
-    description: 'A data sonification of flight departures from around the world',
+    name: 'frequenci.es',
+    title: 'frequenci.es',
+    description: 'Music from airports. A data sonification of flight departures from around the world.',
     siteUrl: 'https://frequenci.es',
     keywords: 'Data sonification, airports, music for airports, ambient, flight patterns, departures',
     google_site_verification: 'xojYv-QrCVOoJEDqvRH7TGN9Fw-30PBeQUmS9wNCGg4',
     og: {
-      image: 'https://frequenci.es/images/og-image.png'
+      image: 'https://frequenci.es/og-images/default.png'
     }
   },
   plugins: [
