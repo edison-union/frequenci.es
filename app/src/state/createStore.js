@@ -23,7 +23,7 @@ const reducer = (state, action) => {
 }
 
 const initialState = {
-  spatialAudioEnabled: false,
+  spatialAudioEnabled: true,
   markerBounds: null,
   mapBounds: null
 }

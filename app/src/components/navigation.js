@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import FlightBoard from './flightBoard'
-import SpatialAudio from './spatialAudio'
+// import SpatialAudio from './spatialAudio'
 import Info from './info'
 import Search from './search'
 import { colours, spacing, timings } from '../style/variables'
 import { above } from '../style/mixins'
 import * as iconDepartures from '../images/icon-departures.svg'
-import * as iconRadar from '../images/icon-radar.svg'
+// import * as iconRadar from '../images/icon-radar.svg'
 import * as iconInfo from '../images/icon-info.svg'
 import * as iconSearch from '../images/icon-search.svg'
 
@@ -40,7 +40,7 @@ class Navigation extends Component {
   }
 
   render() {
-    return (!this.state.hideNavigation && 
+    return (!this.state.hideNavigation &&
       <Container>
         <List>
           <ListItem>
@@ -55,12 +55,13 @@ class Navigation extends Component {
             </Button>
             <FlightBoard {...this.props} {...this.state}/>
           </ListItem>
+          {/*
           <ListItem>
             <Button className={ this.state.childActive === 2 ? 'is-active' : '' } onClick={() => this.toggleChild(2)}>
               <Icon src={iconRadar}/>
             </Button>
             <SpatialAudio {...this.props} {...this.state}/>
-          </ListItem>
+          </ListItem>*/}
           <ListItem>
             <Button className={ this.state.childActive === 3 ? 'is-active' : '' } onClick={() => this.toggleChild(3)}>
               <Icon src={iconInfo}/>
