@@ -40,8 +40,6 @@ const Layout = ({ children, location }) => (
               { property: "og:title", content: data.site.siteMetadata.title },
               { property: "og:type", content: "website" },
               { property: "og:url", content: `${data.site.siteMetadata.siteUrl}`},
-              { property: "og:image", content: data.site.siteMetadata.og.image },
-              { property: "og:image:secure_url", content: data.site.siteMetadata.og.image },
               { property: "og:image:type", content: "image/png" },
               { property: "og:image:width", content: "1200" },
               { property: "og:image:height", content: "630" },
