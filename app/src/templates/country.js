@@ -49,12 +49,7 @@ class CountryTemplate extends React.Component {
   render() {
     const { location, pageContext } = this.props;
     return (
-      <Layout location={location}>
-        <Helmet>
-          <title>{`${pageContext.name} 🛫🎶 frequenci.es`}</title>
-          <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
-          <meta name="og:image" url={`static/og-images/${pageContext.code}.png`}/>
-        </Helmet>
+      <Layout location={location} pageContext={pageContext}>
         <AirTrafficControl country={pageContext.name} data={this.state.airports} center={this.state.center}/>
       </Layout>
     )
