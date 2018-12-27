@@ -110,13 +110,7 @@ class AudioService {
     });
 
     source.buffer = this.buffer[group][sound];
-
-    if (options.spatialAudioEnabled) {
-      source.connect(panner).connect(this.context.destination);
-    } else {
-      source.connect(this.context.destination);
-    }
-
+    source.connect(panner).connect(this.context.destination);
     source.start(options.offset);
   }
 
