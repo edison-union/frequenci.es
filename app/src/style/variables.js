@@ -10,7 +10,7 @@ export const colours = {
   },
   map: {
     water: '#74ceb7',
-    landscape: '#74ceb7',
+    landscape: '#77D4BC',
     road: '#74ceb7'
   },
   button: {

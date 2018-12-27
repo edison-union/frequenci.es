@@ -52,7 +52,7 @@ class Country extends Component {
       // fired and the markers being rendered, so we just delay it 100ms
       setTimeout(() => {
         window.frequencies = true;
-      }, 100);
+      }, 750);
     });
 
     google.maps.event.addListener(map, 'bounds_changed', () => {
