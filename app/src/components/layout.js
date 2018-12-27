@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children, cloneElement } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
@@ -6,7 +6,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
-const Layout = ({ children }) => (
+const Layout = ({ children, location }) => (
     <StaticQuery
       query={graphql`
         query SiteTitleQuery {
@@ -56,7 +56,9 @@ const Layout = ({ children }) => (
           </Helmet>
           <GlobalStyle/>
           <div>
-            {children}
+          {Children.map(children, child => {
+            return cloneElement(child, { location } );
+          })}
           </div>
         </>
       )}
@@ -65,6 +67,7 @@ const Layout = ({ children }) => (
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default Layout

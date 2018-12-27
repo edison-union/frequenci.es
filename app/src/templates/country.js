@@ -4,7 +4,6 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from '../components/layout'
 import AirTrafficControl from '../components/airTrafficControl'
-import MapStyles from '../style/mapStyles'
 import { AirportConstants } from '../constants/airports'
 
 class CountryTemplate extends React.Component {
@@ -47,33 +46,6 @@ class CountryTemplate extends React.Component {
     });
   }
 
-  getStaticMapUrl(center) {
-    let url = `https://maps.googleapis.com/maps/api/staticmap?&size=1200x615&zoom=6&center=${center.lat},${center.lng}&format=png&scale=2&`;
-    url += MapStyles.map((style) => {
-      let output = `style=`;
-
-      if (style.featureType) {
-        output += `feature:${style.featureType}|`
-      }
-
-      if (style.elementType) {
-        output += `element:${style.elementType}|`
-      }
-
-      if (style.stylers) {
-        output += style.stylers.map((styler) => {
-          return Object.keys(styler).map((key) => {
-            return `${key}:${styler[key].replace('#', '0x')}`;
-          });
-        }).join('|')
-      }
-
-      return output;
-    }).join('&');
-
-    return encodeURI(`${url}&key=${process.env.GOOGLE_API_KEY}`);
-  }
-
   render() {
     const { location, pageContext } = this.props;
 
@@ -82,7 +54,7 @@ class CountryTemplate extends React.Component {
         <Helmet>
           <title>{`${pageContext.name} 🛫🎶 frequenci.es`}</title>
           <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
-          <meta name="og:image" url={this.getStaticMapUrl(pageContext.center)}/>
+          <meta name="og:image" url={`static/og-images/${pageContext.id}.png`}/>
         </Helmet>
         <AirTrafficControl country={pageContext.name} data={this.state.airports} center={this.state.center}/>
       </Layout>

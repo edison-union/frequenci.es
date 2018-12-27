@@ -40,15 +40,29 @@ class Country extends Component {
 
     const div = map.getDiv();
 
-  div.firstChild.style.backgroundColor = colours.map.water;
-    //div.firstChild.styleList.add({ backgroundColor: colours.map.water });
-    //console.log(map.firstChild.styleList);
+    // Hack to style the initial state of Google Maps
+    div.firstChild.style.backgroundColor = colours.map.water;
+
     setMarkerBounds(this.state.markerBounds);
+
+    let hasZoomed = false;
+
+    google.maps.event.addListener(map, 'idle', () => {
+      // This is for the og-image generator, there is a delay between this event being
+      // fired and the markers being rendered, so we just delay it 100ms
+      setTimeout(() => {
+        window.frequencies = true;
+      }, 100);
+    });
 
     google.maps.event.addListener(map, 'bounds_changed', () => {
       setMapCenter(map.getCenter());
       setMapBounds(map.getBounds());
-      window.frequencies = true;
+
+      if (!hasZoomed) {
+        hasZoomed = true;
+        map.setZoom(map.getZoom()+.25);
+      }
     });
   }
 

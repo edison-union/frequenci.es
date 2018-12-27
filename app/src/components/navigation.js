@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import queryString from 'query-string'
 import FlightBoard from './flightBoard'
 import SpatialAudio from './spatialAudio'
 import Info from './info'
@@ -16,6 +17,7 @@ class Navigation extends Component {
     super(props);
     this.state = {
       childActive: -1,
+      hideNavigation: false,
       ...props
     };
   }
@@ -32,8 +34,13 @@ class Navigation extends Component {
     })
   }
 
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search);
+    this.setState({ hideNavigation: values.navigation });
+  }
+
   render() {
-    return (
+    return (!this.state.hideNavigation && 
       <Container>
         <List>
           <ListItem>
