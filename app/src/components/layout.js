@@ -7,7 +7,7 @@ import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
 const getPageTitle = (pageContext) => {
-  return pageContext ? `${pageContext.name} » frequenci.es}` : 'frequenci.es';
+  return pageContext ? `${pageContext.name} » frequenci.es` : 'frequenci.es';
 }
 
 const getPageDescription = (pageContext) => {
