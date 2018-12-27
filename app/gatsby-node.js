@@ -30,6 +30,9 @@ exports.createPages = ({ graphql, actions }) => {
                 center {
                   lat,
                   lng
+                },
+                airports {
+                  name
                 }
               }
             }
@@ -42,6 +45,13 @@ exports.createPages = ({ graphql, actions }) => {
         }
 
         const postTemplate = path.resolve(`src/templates/country.js`)
+        const countries = result.data.allAirportsJson.edges.map((edge) => {
+          return {
+            name: edge.node.name,
+            code: edge.node.country.toLowerCase(),
+            airports: edge.node.airports.length
+          }
+        });
 
         result.data.allAirportsJson.edges.forEach((edge) => {
           createPage({
@@ -51,7 +61,8 @@ exports.createPages = ({ graphql, actions }) => {
               id: edge.node.id,
               name: edge.node.name,
               code: edge.node.country.toLowerCase(),
-              center: edge.node.center
+              center: edge.node.center,
+              countries: countries
             },
           })
         });

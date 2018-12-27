@@ -171,6 +171,8 @@ class AirTrafficControl extends Component {
   }
 
   componentWillUnmount() {
+    this.queue.pause();
+    this.queue.clear();
     this.audioService.destroy();
     clearInterval(this.interval);
   }

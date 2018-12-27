@@ -49,7 +49,7 @@ class CountryTemplate extends React.Component {
     const { location, pageContext } = this.props;
     return (
       <Layout location={location} pageContext={pageContext}>
-        <AirTrafficControl country={pageContext.name} data={this.state.airports} center={this.state.center}/>
+        <AirTrafficControl country={pageContext.name} countries={pageContext.countries} data={this.state.airports} center={this.state.center}/>
       </Layout>
     )
   }

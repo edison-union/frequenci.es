@@ -47,13 +47,7 @@ class Navigation extends Component {
             <Button className={ this.state.childActive === 0 ? 'is-active' : '' } onClick={() => this.toggleChild(0)}>
               <Icon src={iconSearch}/>
             </Button>
-            <Search />
-          </ListItem>
-          <ListItem>
-            <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
-              <Icon src={iconDepartures}/>
-            </Button>
-            <FlightBoard {...this.props} {...this.state}/>
+            <Search {...this.props} {...this.state}/>
           </ListItem>
           {/*
           <ListItem>
@@ -67,6 +61,12 @@ class Navigation extends Component {
               <Icon src={iconInfo}/>
             </Button>
             <Info />
+          </ListItem>
+          <ListItem className={ this.props.flights.filter((flight) => flight.processed).length === 0 ? 'is-hidden' : '' }>
+            <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
+              <Icon src={iconDepartures}/>
+            </Button>
+            <FlightBoard {...this.props} {...this.state}/>
           </ListItem>
         </List>
       </Container>
@@ -94,6 +94,10 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   display: flex;
+
+  &.is-hidden {
+    display: none;
+  }
 `
 
 const Icon = styled.img`

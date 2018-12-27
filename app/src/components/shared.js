@@ -50,3 +50,11 @@ export const Link = styled.a`
     color: ${colours.link.hover};
   }
 `
+
+export const Input = styled.input`
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: ${spacing.xs};
+  padding: ${spacing.sm};
+  width: 100%;
+`

@@ -29,7 +29,7 @@ const Container = styled.section`
 
   ${above.md`
     width: 24rem;
-    min-height: 21.25rem;
+    min-height: auto;
   `}
 `
 
