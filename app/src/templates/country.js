@@ -1,7 +1,6 @@
 import * as PropTypes from 'prop-types'
 import React from 'react'
 import { graphql } from 'gatsby'
-import Helmet from 'react-helmet'
 import Layout from '../components/layout'
 import AirTrafficControl from '../components/airTrafficControl'
 import { AirportConstants } from '../constants/airports'
@@ -50,12 +49,7 @@ class CountryTemplate extends React.Component {
     const { location, pageContext } = this.props;
 
     return (
-      <Layout location={location}>
-        <Helmet>
-          <title>{`${pageContext.name} 🛫🎶 frequenci.es`}</title>
-          <meta name="description" content="A data sonification of flight departures in ${pageContext.name}" />
-          <meta name="og:image" url={`static/og-images/${pageContext.id}.png`}/>
-        </Helmet>
+      <Layout pageContext={pageContext} location={location}>
         <AirTrafficControl country={pageContext.name} data={this.state.airports} center={this.state.center}/>
       </Layout>
     )

@@ -6,7 +6,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import { colours } from '../style/variables'
 import { GlobalStyle } from '../style/global.js'
 
-const Layout = ({ children, location }) => (
+const Layout = ({ children, pageContext, location }) => (
     <StaticQuery
       query={graphql`
         query SiteTitleQuery {
@@ -28,7 +28,7 @@ const Layout = ({ children, location }) => (
       render={data => (
         <>
           <Helmet
-            title={data.site.siteMetadata.title}
+            title={`${pageContext.name} 🛫🎶 frequenci.es`}
             meta={[
               { name: 'description', content: data.site.siteMetadata.description },
               { name: 'keywords', content: data.site.siteMetadata.keywords },
@@ -40,6 +40,7 @@ const Layout = ({ children, location }) => (
               { property: "og:title", content: data.site.siteMetadata.title },
               { property: "og:type", content: "website" },
               { property: "og:url", content: `${data.site.siteMetadata.siteUrl}`},
+              { property: "og:image", content: `${data.site.siteMetadata.siteUrl}/static/og-image/${pageContext.id}.png` },
               { property: "og:image:type", content: "image/png" },
               { property: "og:image:width", content: "1200" },
               { property: "og:image:height", content: "630" },
@@ -65,7 +66,8 @@ const Layout = ({ children, location }) => (
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  pageContext: PropTypes.object.isRequired
 }
 
 export default Layout
