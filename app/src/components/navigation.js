@@ -62,7 +62,7 @@ class Navigation extends Component {
             </Button>
             <Info />
           </ListItem>
-          <ListItem className={ this.props.flights.filter((flight) => flight.processing || flight.processed).length === 0 ? 'is-hidden' : '' }>
+          <ListItem className={ !this.props.flights || this.props.flights.filter((flight) => flight.processing || flight.processed).length === 0 ? 'is-hidden' : '' }>
             <Button className={ this.state.childActive === 1 ? 'is-active' : '' } onClick={() => this.toggleChild(1)}>
               <Icon src={iconDepartures}/>
             </Button>

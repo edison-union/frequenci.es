@@ -59,8 +59,7 @@ class FlightBoard extends Component {
 }
 
 FlightBoard.propTypes = {
-  data: PropTypes.array.isRequired,
-  country: PropTypes.string.isRequired
+  data: PropTypes.array
 }
 
 export default FlightBoard

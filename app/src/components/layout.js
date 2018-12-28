@@ -5,19 +5,19 @@ import { StaticQuery, graphql } from 'gatsby'
 import { GlobalStyle } from '../style/global.js'
 
 const getPageTitle = (pageContext, defaultTitle) => {
-  return pageContext ? `${pageContext.name} ✈️ frequenci.es` : defaultTitle;
+  return pageContext && pageContext.name ? `${pageContext.name} ✈️ frequenci.es` : defaultTitle;
 }
 
 const getPageDescription = (pageContext, defaultDescription) => {
-  return pageContext ? `A data sonification of flight departures in ${pageContext.name}` : defaultDescription
+  return pageContext && pageContext.name ? `A data sonification of flight departures in ${pageContext.name}` : defaultDescription
 }
 
 const getPageOpenGraphImage = (baseUrl, pageContext, alt) => {
-  return pageContext ? `${baseUrl}/og-image/${pageContext.code}.png` : alt
+  return pageContext && pageContext.code ? `${baseUrl}/og-image/${pageContext.code}.png` : alt
 }
 
 const getPageUrl = (pageContext, defaultUrl) => {
-  return pageContext ? `${defaultUrl}/${pageContext.code}/` : defaultUrl;
+  return pageContext && pageContext.code ? `${defaultUrl}/${pageContext.code}/` : defaultUrl;
 }
 
 const Layout = ({ children, pageContext, location }) => (
@@ -70,6 +70,9 @@ const Layout = ({ children, pageContext, location }) => (
           <GlobalStyle/>
           <div>
           {Children.map(children, child => {
+            if (child.type.target) {
+              return child;
+            }
             return cloneElement(child, { location } );
           })}
           </div>

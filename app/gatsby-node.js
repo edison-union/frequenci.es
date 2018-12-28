@@ -44,7 +44,9 @@ exports.createPages = ({ graphql, actions }) => {
           reject(new Error(result.errors))
         }
 
-        const postTemplate = path.resolve(`src/templates/country.js`)
+        const countryTemplate = path.resolve(`src/templates/country.js`)
+        const indexTemplate = path.resolve(`src/templates/index.js`)
+
         const countries = result.data.allAirportsJson.edges.map((edge) => {
           return {
             name: edge.node.name,
@@ -53,10 +55,20 @@ exports.createPages = ({ graphql, actions }) => {
           }
         });
 
+
+        // Index page
+        createPage({
+          path : '/',
+          component: slash(indexTemplate),
+          context: {
+            countries: countries
+          }
+        });
+
         result.data.allAirportsJson.edges.forEach((edge) => {
           createPage({
             path: `/${slug(edge.node.country.toLowerCase())}/`,
-            component: slash(postTemplate),
+            component: slash(countryTemplate),
             context: {
               id: edge.node.id,
               name: edge.node.name,

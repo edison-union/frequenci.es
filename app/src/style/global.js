@@ -66,23 +66,35 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1 {
-    font-size: ${typography.h1};
+    font-size: calc(${typography.h1} / 2);
     letter-spacing: 0.35rem;
+    ${above.md`
+      font-size: ${typography.h1};
+    `}
   }
 
   h2 {
-    font-size: ${typography.h2};
+    font-size: calc(${typography.h2} / 2);
     letter-spacing: 0.3rem;
+    ${above.md`
+      font-size: ${typography.h2};
+    `}
   }
 
   h3 {
-    font-size: ${typography.h3};
+    font-size: calc(${typography.h3} / 2);
     letter-spacing: 0.25rem;
+    ${above.md`
+      font-size: ${typography.h3};
+    `}
   }
 
   h4 {
     font-size: ${typography.h4};
     letter-spacing: 0.2rem;
+    ${above.md`
+      font-size: ${typography.h4};
+    `}
   }
 
   h5 {
