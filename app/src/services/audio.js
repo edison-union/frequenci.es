@@ -32,7 +32,7 @@ class AudioService {
     panner.setPosition(x, y, z);
     panner.connect(gain);
 
-    filter.type = filter.ALLPASS;
+    filter.type = filter.HIGHPASS;
     filter.frequency.value = frequency;
     filter.Q.value = 20;
     filter.connect(panner);
@@ -89,22 +89,28 @@ class AudioService {
     const source = this.context.createBufferSource();
     const group = Object.keys(AirportConstants).indexOf(options.type);
     const sound = this.mapHeightToNote(options.height);
-    const panner = new PannerNode(this.context, {
-      panningModel: 'HRTF',
-      distanceModel: 'linear',
-      positionX: options.spatialData.x,
-      positionY: options.spatialData.y,
-      positionZ: options.spatialData.z,
-      refDistance: 0,
-      maxDistance: 10,
-      rolloffFactor: 2,
-      coneInnerAngle: 30,
-      coneOuterAngle: 40,
-      coneOuterGain: .7
-    });
 
     source.buffer = this.buffer[group][sound];
-    source.connect(panner).connect(this.context.destination);
+
+    if (window.PannerNode) {
+      const panner = new PannerNode(this.context, {
+        panningModel: 'HRTF',
+        distanceModel: 'linear',
+        positionX: options.spatialData.x,
+        positionY: options.spatialData.y,
+        positionZ: options.spatialData.z,
+        refDistance: 0,
+        maxDistance: 10,
+        rolloffFactor: 2,
+        coneInnerAngle: 30,
+        coneOuterAngle: 40,
+        coneOuterGain: .7
+      });
+      source.connect(panner).connect(this.context.destination);
+    } else {
+      source.connect(this.context.destination);
+    }
+
     source.start(options.offset);
   }
 

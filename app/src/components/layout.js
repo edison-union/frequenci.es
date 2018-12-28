@@ -5,7 +5,7 @@ import { StaticQuery, graphql } from 'gatsby'
 import { GlobalStyle } from '../style/global.js'
 
 const getPageTitle = (pageContext, defaultTitle) => {
-  return pageContext ? `${pageContext.name} » frequenci.es` : defaultTitle;
+  return pageContext ? `${pageContext.name} ✈️ frequenci.es` : defaultTitle;
 }
 
 const getPageDescription = (pageContext, defaultDescription) => {

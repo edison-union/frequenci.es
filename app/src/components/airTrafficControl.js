@@ -2,16 +2,19 @@ import React, { Component } from 'react'
 import fetch from 'isomorphic-fetch'
 import moment from 'moment-timezone'
 import styled from 'styled-components'
+import Div100vh from 'react-div-100vh'
 import _ from 'lodash'
+import { isIOS } from 'react-device-detect'
 import { connect } from 'react-redux'
 import AudioService from '../services/audio'
 import Song from '../services/song'
 import PQueue from 'p-queue'
 import Country from './country'
 import Navigation from './navigation'
+import { Heading, Copy, Button, ButtonRow } from './shared'
 import { shuffle } from '../util/array'
 import { scale } from '../util/number'
-import { colours } from '../style/variables'
+import { colours, spacing } from '../style/variables'
 import { above } from '../style/mixins'
 import * as spinner from '../images/icon-spinner.svg'
 
@@ -22,6 +25,7 @@ class AirTrafficControl extends Component {
     this.state = {
       flights: [],
       buffer: [],
+      isModalOpen: true,
       mapUrl: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
     };
   }
@@ -64,7 +68,10 @@ class AirTrafficControl extends Component {
             }, null)
           }
 
-          this.audioService.departureSound(options);
+          if (this.audioService) {
+            this.audioService.departureSound(options);
+          }
+
           flight.timestamp = new Date().getTime();
           flight.processing = true;
           index++;
@@ -163,9 +170,21 @@ class AirTrafficControl extends Component {
     });
   }
 
-  componentDidMount() {
+  startAudioIOS() {
     this.audioService = new AudioService();
     this.audioService.backgroundSound();
+    this.setState({ isModalOpen: false });
+  }
+
+  closeModal() {
+    this.setState({ isModalOpen: false });
+  }
+
+  componentDidMount() {
+    if (!isIOS) {
+      this.audioService = new AudioService();
+      this.audioService.backgroundSound();
+    }
     this.song = new Song();
     this.queueRequests();
     this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getNoteDelay(1, 4));
@@ -180,16 +199,27 @@ class AirTrafficControl extends Component {
 
   render() {
     return (
-      <Container>
-        <Navigation {...this.props} {...this.state}/>
-        <Country
-          googleMapURL={this.state.mapUrl}
-          loadingElement={(<Loading/>)}
-          containerElement={<MapContainer/>}
-          mapElement={<Map/>}
-          {...this.props}
-          {...this.state}/>
-      </Container>
+      <Div100vh>
+        <Container>
+          <Navigation {...this.props} {...this.state}/>
+          <Country googleMapURL={this.state.mapUrl} loadingElement={(<Loading/>)} containerElement={<MapContainer/>} mapElement={<Map/>} {...this.props} {...this.state}/>
+          {this.state.isModalOpen && isIOS && (
+            <Div100vh>
+              <ModalOverlay>
+                <Modal>
+                  <Heading>Enable Audio</Heading>
+                  <Copy>iOS will only start an AudioContext in response to a user interaction, so to enjoy the full visual audio/visual experience
+                  of frequenci.es on your device, please tap the Start Audio button below to start!</Copy>
+                  <ButtonRow>
+                    <Button onClick={() => this.startAudioIOS()}>Start Audio</Button>
+                    <Button onClick={() => this.closeModal()}>No Thanks</Button>
+                  </ButtonRow>
+                </Modal>
+              </ModalOverlay>
+            </Div100vh>
+          )}
+        </Container>
+      </Div100vh>
     );
   }
 }
@@ -202,6 +232,7 @@ const mapStateToProps = state => {
   }
 }
 
+
 export default connect(
   mapStateToProps
 )(AirTrafficControl)
@@ -209,9 +240,9 @@ export default connect(
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
   overflow: hidden;
+  width: 100vw;
 
   ${above.md`
     flex-direction: row;
@@ -220,8 +251,8 @@ const Container = styled.section`
 
 const MapContainer = styled.div`
   display: flex;
-  width: 100vw;
   height: 103vh;
+  width: 100vw;
 `
 
 const Loading = styled(MapContainer)`
@@ -233,3 +264,30 @@ const Loading = styled(MapContainer)`
 `
 
 const Map = styled(MapContainer)``
+
+const ModalOverlay = styled(Div100vh)`
+  display: flex;
+  background-color: ${colours.overlay};
+  z-index: 99998;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+`
+
+const Modal = styled.div`
+  background-color: ${colours.white};
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  left: 50%;
+  max-height: 40rem;
+  max-width: 40rem;
+  padding: ${spacing.md};
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  z-index: 99999;
+`

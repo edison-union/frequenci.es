@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import classNames from 'classnames'
-import { gpuStyles } from '../style/mixins'
-import { colours, spacing, timings } from '../style/variables'
+import { colours } from '../style/variables'
 import { AirportConstants } from '../constants/airports'
-import { Heading } from './shared'
+import { Card, CardTitle, CardCopy, Heading } from './shared'
 import Song from '../services/song'
 import Flyout from './flyout'
 
@@ -39,13 +38,18 @@ class FlightBoard extends Component {
         <Heading>Departure Board</Heading>
         {this.state.flights && this.state.flights.map((flight, i) => {
           if (this.isValidFlight(flight, i)) {
-            return (<Flight className={classNames({
-                'is-transitioning': Date.now() - flight.timestamp > 5,
-                'is-old': Date.now() - flight.timestamp > this.song.getBars(2)
-              })} types={Object.keys(AirportConstants)} activeType={flight.departure_airport.type} key={`${flight.callsign}-${i}`}>
-                <FlightCallsign>{flight.callsign ? flight.callsign : '-' }</FlightCallsign>
-                <FlightAirport>{flight.departure_airport.name}</FlightAirport>
-            </Flight>)
+            return (
+              <Flight
+                target={flight.callsign ? '_blank' : '_self'}
+                href={flight.callsign ? `http://flightaware.com/live/flight/${flight.callsign.toUpperCase()}` : 'javascript://'}
+                className={classNames({
+                  'is-transitioning': Date.now() - flight.timestamp > 5,
+                  'is-old': Date.now() - flight.timestamp > this.song.getBars(2)
+                })} types={Object.keys(AirportConstants)} activeType={flight.departure_airport.type} key={`${flight.callsign}-${i}`}>
+                  <CardTitle>{flight.callsign ? flight.callsign : '-' }</CardTitle>
+                  <CardCopy>{flight.departure_airport.name}</CardCopy>
+              </Flight>
+            )
           }
           return false;
         }).reverse()}
@@ -61,44 +65,22 @@ FlightBoard.propTypes = {
 
 export default FlightBoard
 
-const Flight = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: min-content;
-  font-size: .8rem;
-  padding: ${spacing.xs} ${spacing.sm};
-  transform: rotateX(-90deg);
-  transition: transform ${timings.sm}s ease-out, opacity ${timings.lg}s ease-out;
-  width: 100%;
-  box-sizing: border-box;
-
-  ${gpuStyles``}
-
+const Flight = styled(Card)`
   ${props => props.types.map((type) => {
     if (props.activeType === type) {
       return `background-color: ${AirportConstants[type].colour};
-        color: ${colours.white};`
+        color: ${colours.white};
+
+        &:hover,
+        &:focus {
+          background-color: ${AirportConstants[type].colour};
+          opacity: 1;
+        }
+
+        &:focus {
+          outline: 1px dotted ${AirportConstants[type].colour};
+        }`
     }
     return false;
   })}
-
-  &.is-transitioning {
-    transform: rotateX(0deg);
-  }
-
-  &.is-old {
-    opacity: .8;
-  }
-
-  & + & {
-    margin-top: ${spacing.xs};
-  }
-`
-
-const FlightCallsign = styled.strong`
-  font-weight: 600;
-`
-
-const FlightAirport = styled.p`
-  margin: 0;
 `

@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
 import Flyout from './flyout'
-import { Heading, Input } from './shared'
+import { Heading, Card, CardCopy, CardTitle, Input } from './shared'
 import styled from 'styled-components'
-import { gpuStyles } from '../style/mixins'
-import { colours, spacing, timings } from '../style/variables'
+import { colours } from '../style/variables'
 
 class Search extends Component {
   constructor(props) {
@@ -42,8 +40,8 @@ class Search extends Component {
       <Input ref={(ref) => { this.inputRef = ref; }} onKeyUp={(e) => { this.handleKeyDown(e) }}/>
       {this.state.results.map((result) => {
         return (<Country key={result.code} to={result.code}>
-          <CountryName>{result.name}</CountryName>
-          <CountryAirports>{result.airports} airports</CountryAirports>
+          <CardTitle>{result.name}</CardTitle>
+          <CardCopy>{result.airports} airports</CardCopy>
         </Country>);
       })}
     </Flyout>);
@@ -57,41 +55,16 @@ Search.propTypes = {
 
 export default Search
 
-const Country = styled(Link)`
+const Country = styled(Card)`
   background-color: ${colours.button.background};
-  box-sizing: border-box;
   color: ${colours.button.text};
-  display: flex;
-  flex-direction: column;
-  font-size: .8rem;
-  min-height: min-content;
-  padding: ${spacing.xs} ${spacing.sm};
-  text-decoration: none;
-  transform: rotateX(-90deg);
-  transition: transform ${timings.sm}s ease-out, opacity ${timings.lg}s ease-out;
-  width: 100%;
 
-  ${gpuStyles``}
-
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${colours.button.hover}
   }
 
   &:focus {
-    background-color: ${colours.button.hover};
     outline: 1px dotted ${colours.button.hover};
   }
-
-  & + & {
-    margin-top: ${spacing.xs};
-  }
-`
-
-const CountryName = styled.strong`
-  font-size: 1rem;
-  font-weight: 600;
-`
-
-const CountryAirports = styled.p`
-  margin: 0;
 `

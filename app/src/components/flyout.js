@@ -28,8 +28,8 @@ const Container = styled.section`
   ${gpuStyles``}
 
   ${above.md`
-    width: 24rem;
     min-height: auto;
+    width: 24rem;
   `}
 `
 

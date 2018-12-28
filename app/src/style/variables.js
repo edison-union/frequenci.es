@@ -3,6 +3,7 @@ export const colours = {
   heading: '#191512',
   subheading: '#241e19',
   copy: '#54473a',
+  overlay: 'rgba(36, 30, 25, .4)',
   navigation: {
     background: '#f6f7f2',
     text: '#001921',

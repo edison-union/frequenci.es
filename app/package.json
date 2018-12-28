@@ -26,6 +26,8 @@
     "puppeteer": "^1.11.0",
     "query-string": "^6.2.0",
     "react": "^16.6.3",
+    "react-device-detect": "^1.6.1",
+    "react-div-100vh": "^0.3.2",
     "react-dom": "^16.6.3",
     "react-geocode": "^0.1.2",
     "react-geolocation": "^1.0.4",
@@ -43,7 +45,7 @@
   "scripts": {
     "build": "node ./build.js && gatsby build",
     "screenshots": "node og-images.js",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
     "start": "npm run develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
