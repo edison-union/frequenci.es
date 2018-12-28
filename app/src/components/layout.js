@@ -13,7 +13,7 @@ const getPageDescription = (pageContext, defaultDescription) => {
 }
 
 const getPageOpenGraphImage = (baseUrl, pageContext, alt) => {
-  return pageContext ? `${baseUrl}/og-images/${pageContext.code}.png` : alt
+  return pageContext ? `${baseUrl}/og-image/${pageContext.code}.png` : alt
 }
 
 const getPageUrl = (pageContext, defaultUrl) => {

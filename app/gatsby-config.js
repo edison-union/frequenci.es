@@ -11,7 +11,7 @@ module.exports = {
     keywords: 'Data sonification, airports, music for airports, ambient, flight patterns, departures',
     google_site_verification: 'xojYv-QrCVOoJEDqvRH7TGN9Fw-30PBeQUmS9wNCGg4',
     og: {
-      image: 'https://frequenci.es/og-images/default.png'
+      image: 'https://frequenci.es/og-image/default.png'
     }
   },
   plugins: [

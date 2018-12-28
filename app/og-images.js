@@ -17,7 +17,7 @@ let page, country;
     await page.goto(`http://localhost:8000/${country.toLowerCase()}?navigation=false`);
     try {
       await page.waitForFunction(() => window.frequencies);
-      await page.screenshot({ path: `./static/og-images/${country.toLowerCase()}.png` });
+      await page.screenshot({ path: `./static/og-image/${country.toLowerCase()}.png` });
     }
     catch(e) {
       console.log(`Error on ${name} (${country})`);
