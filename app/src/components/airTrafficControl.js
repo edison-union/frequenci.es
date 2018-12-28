@@ -26,6 +26,7 @@ class AirTrafficControl extends Component {
       flights: [],
       buffer: [],
       isModalOpen: true,
+      isReady: false,
       mapUrl: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
     };
   }
@@ -80,8 +81,6 @@ class AirTrafficControl extends Component {
         return flight;
       });
 
-    console.log(buffer);
-    
     if (!_.isEqual(buffer, this.state.buffer)) {
       this.setState({ buffer: buffer });
     }
@@ -173,8 +172,7 @@ class AirTrafficControl extends Component {
   }
 
   startAudioIOS() {
-    this.audioService = new AudioService();
-    this.audioService.backgroundSound();
+    this.startAudio();
     this.setState({ isModalOpen: false });
   }
 
@@ -182,14 +180,25 @@ class AirTrafficControl extends Component {
     this.setState({ isModalOpen: false });
   }
 
-  componentDidMount() {
-    if (!isIOS) {
-      this.audioService = new AudioService();
-      this.audioService.backgroundSound();
-    }
-    this.song = new Song();
+  startRequests() {
+    this.setState({ isReady: true });
     this.queueRequests();
     this.interval = setInterval(() => this.addNewFlightsToBuffer(), this.song.getNoteDelay(1, 4));
+  }
+
+  startAudio() {
+    this.song = new Song();
+    this.audioService = new AudioService();
+    this.audioService.onReady = () => {
+      this.startRequests();
+      this.audioService.backgroundSound();
+    }
+  }
+
+  componentDidMount() {
+    if (!isIOS) {
+      this.startAudio();
+    }
   }
 
   componentWillUnmount() {
@@ -204,22 +213,27 @@ class AirTrafficControl extends Component {
       <Div100vh>
         <Container>
           <Navigation {...this.props} {...this.state}/>
-          <Country googleMapURL={this.state.mapUrl} loadingElement={(<Loading/>)} containerElement={<MapContainer/>} mapElement={<Map/>} {...this.props} {...this.state}/>
-          {this.state.isModalOpen && isIOS && (
-            <Div100vh>
-              <ModalOverlay>
-                <Modal>
-                  <Heading>Enable Audio</Heading>
-                  <Copy>iOS will only start an AudioContext in response to a user interaction, so to enjoy the full visual audio/visual experience
-                  of frequenci.es on your device, please tap the Start Audio button below to start!</Copy>
-                  <ButtonRow>
-                    <Button onClick={() => this.startAudioIOS()}>Start Audio</Button>
-                    <Button onClick={() => this.closeModal()}>No Thanks</Button>
-                  </ButtonRow>
-                </Modal>
-              </ModalOverlay>
-            </Div100vh>
+          {this.state.isReady && (
+            <Country googleMapURL={this.state.mapUrl} loadingElement={(<Loading/>)} containerElement={<MapContainer/>} mapElement={<Map/>} {...this.props} {...this.state}/>
           )}
+          {!this.state.isReady && (
+            <Loading/>
+          )}
+            {this.state.isModalOpen && isIOS && (
+              <Div100vh>
+                <ModalOverlay>
+                  <Modal>
+                    <Heading>Enable Audio</Heading>
+                    <Copy>iOS will only start an AudioContext in response to a user interaction, so to enjoy the full visual audio/visual experience
+                    of frequenci.es on your device, please tap the Start Audio button below to start!</Copy>
+                    <ButtonRow>
+                      <Button onClick={() => this.startAudioIOS()}>Start Audio</Button>
+                      <Button onClick={() => this.closeModal()}>No Thanks</Button>
+                    </ButtonRow>
+                  </Modal>
+                </ModalOverlay>
+              </Div100vh>
+            )}
         </Container>
       </Div100vh>
     );

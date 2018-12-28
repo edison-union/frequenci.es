@@ -10,6 +10,9 @@ class AudioService {
     this.buffer = [];
     this.bufferLoader.load().then((buffer) => {
       this.buffer = buffer;
+      if (this.onReady) {
+        this.onReady();
+      }
     }).catch((err) => {
       console.log(err);
     });
