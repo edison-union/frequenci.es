@@ -48,7 +48,7 @@ class AirTrafficControl extends Component {
   }
 
   addNewFlightsToBuffer() {
-    const { data, spatialAudioEnabled } = this.props;
+    const { data } = this.props;
     let index = 0;
 
     let buffer = this.state.flights
@@ -57,7 +57,6 @@ class AirTrafficControl extends Component {
         if (!flight.processing) {
           const options = {
             height: flight.estDepartureAirportVertDistance,
-            spatialAudioEnabled: spatialAudioEnabled,
             spatialData: this.convertDistanceToSpatial(flight),
             offset: this.song.getNoteDelay(index, 8),
             type: data.reduce((a, b) => {

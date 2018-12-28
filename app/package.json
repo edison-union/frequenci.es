@@ -46,6 +46,7 @@
     "build": "node ./build.js && gatsby build",
     "screenshots": "node og-images.js",
     "develop": "gatsby develop -H 0.0.0.0",
+    "serve": "gatsby build && gatsby serve",
     "start": "npm run develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
