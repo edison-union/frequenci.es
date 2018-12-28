@@ -50,6 +50,7 @@ class AirTrafficControl extends Component {
   addNewFlightsToBuffer() {
     const { data } = this.props;
     let index = 0;
+    console.log(data);
 
     let buffer = this.state.flights
       .filter((flight) => !flight.processed)
@@ -79,6 +80,8 @@ class AirTrafficControl extends Component {
         return flight;
       });
 
+    console.log(buffer);
+    
     if (!_.isEqual(buffer, this.state.buffer)) {
       this.setState({ buffer: buffer });
     }
