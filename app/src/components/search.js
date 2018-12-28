@@ -17,7 +17,7 @@ class Search extends Component {
 
   handleKeyDown() {
     const { countries } = this.props;
-    const regex = new RegExp(this.inputRef.value);
+    const regex = new RegExp(this.inputRef.value, 'ig');
 
     if (this.inputRef.value.length >= 2) {
       this.setState({
