@@ -52,7 +52,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: '',
+        trackingId: 'UA-127969191-2',
         head: true,
         cookieDomain: "frequenci.es"
       }
