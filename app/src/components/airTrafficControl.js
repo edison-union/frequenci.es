@@ -12,7 +12,6 @@ import PQueue from 'p-queue'
 import Country from './country'
 import Navigation from './navigation'
 import { Heading, Copy, Button, ButtonRow } from './shared'
-import { shuffle } from '../util/array'
 import { scale } from '../util/number'
 import { colours, spacing } from '../style/variables'
 import { above } from '../style/mixins'
@@ -21,12 +20,14 @@ import * as spinner from '../images/icon-spinner.svg'
 class AirTrafficControl extends Component {
   constructor() {
     super();
+
     this.queue = new PQueue({ concurrency: parseInt(process.env.API_REQUEST_CONCURRENCY) });
     this.state = {
       flights: [],
       buffer: [],
       isModalOpen: true,
       isReady: false,
+      activeAirports: [],
       mapUrl: `https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}`
     };
   }
@@ -51,8 +52,10 @@ class AirTrafficControl extends Component {
   addNewFlightsToBuffer() {
     const { data } = this.props;
     let index = 0;
-    console.log(data);
 
+    // Buffer is for any recently added flights
+    // If it's currently not being processed, we feed the audio service
+    // an object of parameters that it uses to play a sound
     let buffer = this.state.flights
       .filter((flight) => !flight.processed)
       .map((flight) => {
@@ -81,10 +84,13 @@ class AirTrafficControl extends Component {
         return flight;
       });
 
+    // Performance tweak
+    // We don't want to re-render anything unless the buffer has changed
     if (!_.isEqual(buffer, this.state.buffer)) {
       this.setState({ buffer: buffer });
     }
 
+    // Clear out any decayed flights
     this.clearBuffer();
   }
 
@@ -109,6 +115,12 @@ class AirTrafficControl extends Component {
   }
 
   getDepartures(airport, start, end) {
+    this.setState((prevState) => {
+      return {
+        activeAirports: [...prevState.activeAirports, airport.gps_code]
+      }
+    });
+
     return fetch(`${process.env.API_URL_DEPARTURES}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
       .then((response) => {
         if (!response.ok) {
@@ -122,6 +134,8 @@ class AirTrafficControl extends Component {
         const { data } = this.props;
         if (json.length) {
           this.setState((prevState) => {
+            // We need to filter out if it's already been added
+            // Then add some other data attributes
             const flights = json.filter((flight) => {
               return !prevState.flights.some((f) => {
                 return f.callsign === flight.callsign
@@ -151,6 +165,12 @@ class AirTrafficControl extends Component {
           setTimeout(() => this.queue.start(), process.env.API_RETRY_TIMEOUT);
         }
         return false;
+      }).finally(() => {
+        this.setState((prevState) => {
+          return {
+            activeAirports: prevState.activeAirports.filter((a) => !a.gps_code === airport.gps_code)
+          }
+        });
       });
   }
 
@@ -158,14 +178,24 @@ class AirTrafficControl extends Component {
     const { data } = this.props;
     const now = moment();
 
-    shuffle(data).forEach((airport) => {
+    // Sort by latitude and longitude
+    // Left -> Right
+    // Top -> Bottom
+    data.sort((a, b) => {
+      return a.coordinates.lng - b.coordinates.lng || a.coordinates.lat - b.coordinates.lat;
+    }).forEach((airport) => {
       const time = now.clone();
       time.tz(airport.timezone_id);
+
+      // Create timestamps to search by i.e. now and now - N minutes
       const end = time.unix();
       const start = time.add(-process.env.TIME_SINCE_LAST_FLIGHT, 'minutes').unix();
+
+      // Add promises to the queue
       this.queue.add(() => this.getDepartures(airport, start, end));
     });
 
+    // When the queue is empty, re-hydrate it
     this.queue.onIdle().then(() => {
       setTimeout(() => this.queueRequests(), process.env.REQUEST_INTERVAL)
     });

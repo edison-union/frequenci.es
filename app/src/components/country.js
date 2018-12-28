@@ -69,6 +69,7 @@ class Country extends Component {
   getMarkerForAirport(airport) {
     const hasDeparture = this.state.buffer.filter((flight) => flight.estDepartureAirport === airport.gps_code).length > 0;
 
+    const isCurrentlyChecking = this.state.activeAirports.filter((a) => a === airport.gps_code).length > 0;
     const matchingIcon = AirportConstants[airport.type].markers;
 
     if (hasDeparture) {
@@ -77,6 +78,14 @@ class Country extends Component {
          anchor: new google.maps.Point(matchingIcon.active.size / 2, matchingIcon.active.size / 2),
          size: new google.maps.Size(matchingIcon.active.size, matchingIcon.active.size)
        };
+     }
+
+     if (isCurrentlyChecking) {
+       return {
+          url: matchingIcon.checking.icon,
+          anchor: new google.maps.Point(matchingIcon.checking.size / 2, matchingIcon.checking.size / 2),
+          size: new google.maps.Size(matchingIcon.checking.size, matchingIcon.checking.size)
+        };
      }
 
      return {
