@@ -67,17 +67,17 @@ export const GlobalStyle = createGlobalStyle`
 
   h1 {
     font-size: ${typography.h1};
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.35rem;
   }
 
   h2 {
     font-size: ${typography.h2};
-    letter-spacing: 0.4rem;
+    letter-spacing: 0.3rem;
   }
 
   h3 {
     font-size: ${typography.h3};
-    letter-spacing: 0.3rem;
+    letter-spacing: 0.25rem;
   }
 
   h4 {
@@ -87,12 +87,10 @@ export const GlobalStyle = createGlobalStyle`
 
   h5 {
     font-size: ${typography.h5};
-    letter-spacing: 0.1rem;
   }
 
   h6 {
     font-size: ${typography.h6};
-    letter-spacing: 0.1rem;
   }
 
   ul {
