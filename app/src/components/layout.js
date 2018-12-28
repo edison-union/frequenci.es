@@ -60,6 +60,7 @@ const Layout = ({ children, pageContext, location }) => (
               { property: "og:image:height", content: "630" },
               { property: "og:description", content: getPageDescription(pageContext, data.site.siteMetadata.description) },
               { property: "og:site_name", content: data.site.siteMetadata.name },
+              { property: "og:updated_time", content: new Date().toISOString() },
               { name: "google-site-verification", content: data.site.siteMetadata.google_site_verification }
             ]}
           >
