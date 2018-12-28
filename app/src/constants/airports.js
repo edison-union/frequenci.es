@@ -23,7 +23,7 @@ export const AirportConstants = {
       },
       checking: {
         icon: markerLargeChecking,
-        size: 14
+        size: 18
       }
     },
     sounds: [
@@ -50,7 +50,7 @@ export const AirportConstants = {
       },
       checking: {
         icon: markerMediumChecking,
-        size: 8
+        size: 12
       }
     },
     sounds: [
@@ -77,7 +77,7 @@ export const AirportConstants = {
       },
       checking: {
         icon: markerSmallChecking,
-        size: 5
+        size: 9
       }
     },
     sounds: [

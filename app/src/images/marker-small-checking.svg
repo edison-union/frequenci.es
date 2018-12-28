@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="5px" height="5px" viewBox="0 0 5 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <circle fill="#3FB0A9" fill-rule="nonzero" cx="2.5" cy="2.5" r="2.5"></circle>
+<svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <circle fill="#3FB0A9" fill-rule="nonzero" cx="4.5" cy="4.5" r="3">
+    <animate attributeName="fill" values="#191512;#3FB0A9" dur=".2s"/>
+  </circle>
+  <circle stroke="#3FB0A9" stroke-width="1" fill="none" stroke-dashoffset=".5" stroke-dasharray="1" fill-rule="nonzero" cx="4.5" cy="4.5" r="4">
+    <animate attributeName="stroke" values="#191512;#3FB0A9" dur=".2s"/>
+    <animate attributeName="r"
+                      from="3"
+                      to="4"
+                      dur=".2s"/>
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 4.5 4.5"
+                      to="360 4.5 4.5"
+                      dur="1s"
+                      repeatCount="indefinite"/>
+  </circle>
 </svg>
