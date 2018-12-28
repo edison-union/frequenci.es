@@ -114,7 +114,7 @@ class AudioService {
       source.connect(this.context.destination);
     }
 
-    source.start(options.offset);
+    source.start();
   }
 
   destroy() {

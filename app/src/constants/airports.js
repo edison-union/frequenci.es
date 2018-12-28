@@ -20,13 +20,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/ping-c.wav',
-      '/sounds/ping-d.wav',
-      '/sounds/ping-e.wav',
-      '/sounds/ping-f.wav',
-      '/sounds/ping-g.wav',
-      '/sounds/ping-a.wav',
-      '/sounds/ping-b.wav'
+      'https://frequencies.netlify.com/sounds/ping-c.wav',
+      'https://frequencies.netlify.com/sounds/ping-d.wav',
+      'https://frequencies.netlify.com/sounds/ping-e.wav',
+      'https://frequencies.netlify.com/sounds/ping-f.wav',
+      'https://frequencies.netlify.com/sounds/ping-g.wav',
+      'https://frequencies.netlify.com/sounds/ping-a.wav',
+      'https://frequencies.netlify.com/sounds/ping-b.wav'
     ],
   },
   medium_airport: {
@@ -43,13 +43,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/whale-c.wav',
-      '/sounds/whale-d.wav',
-      '/sounds/whale-e.wav',
-      '/sounds/whale-f.wav',
-      '/sounds/whale-g.wav',
-      '/sounds/whale-a.wav',
-      '/sounds/whale-b.wav'
+      'https://frequencies.netlify.com/sounds/whale-c.wav',
+      'https://frequencies.netlify.com/sounds/whale-d.wav',
+      'https://frequencies.netlify.com/sounds/whale-e.wav',
+      'https://frequencies.netlify.com/sounds/whale-f.wav',
+      'https://frequencies.netlify.com/sounds/whale-g.wav',
+      'https://frequencies.netlify.com/sounds/whale-a.wav',
+      'https://frequencies.netlify.com/sounds/whale-b.wav'
     ],
   },
   small_airport: {
@@ -66,13 +66,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      '/sounds/grind-c.wav',
-      '/sounds/grind-d.wav',
-      '/sounds/grind-e.wav',
-      '/sounds/grind-e.wav',
-      '/sounds/grind-e.wav',
-      '/sounds/grind-e.wav',
-      '/sounds/grind-e.wav'
+      'https://frequencies.netlify.com/sounds/grind-c.wav',
+      'https://frequencies.netlify.com/sounds/grind-d.wav',
+      'https://frequencies.netlify.com/sounds/grind-e.wav',
+      'https://frequencies.netlify.com/sounds/grind-e.wav',
+      'https://frequencies.netlify.com/sounds/grind-e.wav',
+      'https://frequencies.netlify.com/sounds/grind-e.wav',
+      'https://frequencies.netlify.com/sounds/grind-e.wav'
     ],
   }
 }
