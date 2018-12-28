@@ -20,13 +20,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      'https://frequencies.netlify.com/sounds/ping-c.wav',
-      'https://frequencies.netlify.com/sounds/ping-d.wav',
-      'https://frequencies.netlify.com/sounds/ping-e.wav',
-      'https://frequencies.netlify.com/sounds/ping-f.wav',
-      'https://frequencies.netlify.com/sounds/ping-g.wav',
-      'https://frequencies.netlify.com/sounds/ping-a.wav',
-      'https://frequencies.netlify.com/sounds/ping-b.wav'
+      '/sounds/ping-c.mp3',
+      '/sounds/ping-d.mp3',
+      '/sounds/ping-e.mp3',
+      '/sounds/ping-f.mp3',
+      '/sounds/ping-g.mp3',
+      '/sounds/ping-a.mp3',
+      '/sounds/ping-b.mp3'
     ],
   },
   medium_airport: {
@@ -43,13 +43,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      'https://frequencies.netlify.com/sounds/whale-c.wav',
-      'https://frequencies.netlify.com/sounds/whale-d.wav',
-      'https://frequencies.netlify.com/sounds/whale-e.wav',
-      'https://frequencies.netlify.com/sounds/whale-f.wav',
-      'https://frequencies.netlify.com/sounds/whale-g.wav',
-      'https://frequencies.netlify.com/sounds/whale-a.wav',
-      'https://frequencies.netlify.com/sounds/whale-b.wav'
+      '/sounds/whale-c.mp3',
+      '/sounds/whale-d.mp3',
+      '/sounds/whale-e.mp3',
+      '/sounds/whale-f.mp3',
+      '/sounds/whale-g.mp3',
+      '/sounds/whale-a.mp3',
+      '/sounds/whale-b.mp3'
     ],
   },
   small_airport: {
@@ -66,13 +66,13 @@ export const AirportConstants = {
       },
     },
     sounds: [
-      'https://frequencies.netlify.com/sounds/grind-c.wav',
-      'https://frequencies.netlify.com/sounds/grind-d.wav',
-      'https://frequencies.netlify.com/sounds/grind-e.wav',
-      'https://frequencies.netlify.com/sounds/grind-e.wav',
-      'https://frequencies.netlify.com/sounds/grind-e.wav',
-      'https://frequencies.netlify.com/sounds/grind-e.wav',
-      'https://frequencies.netlify.com/sounds/grind-e.wav'
+      '/sounds/grind-c.mp3',
+      '/sounds/grind-d.mp3',
+      '/sounds/grind-e.mp3',
+      '/sounds/grind-e.mp3',
+      '/sounds/grind-e.mp3',
+      '/sounds/grind-e.mp3',
+      '/sounds/grind-e.mp3'
     ],
   }
 }
