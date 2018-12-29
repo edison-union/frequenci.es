@@ -15,7 +15,7 @@ class Info extends Component {
       <Copy>Icons by <TextLink href="https://www.flaticon.com/authors/itim2101" title="itim2101" target="_blank">itim2101</TextLink> from <TextLink href="https://www.flaticon.com/" title="Flaticon" target="_blank">www.flaticon.com</TextLink> and is licensed by <TextLink href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</TextLink></Copy>
       <Subheading>The Code</Subheading>
       <Copy>Built with <TextLink href="https://gatsbyjs.org" target="_blank">Gatsby</TextLink> and <TextLink href="https://reactjs.org" target="_blank">React</TextLink>.
-      Source code available on <TextLink href="https://github.com/struct78/frequenci.es" target="_blank">Github</TextLink>.</Copy>
+      Source code available on <TextLink href="https://github.com/edison-union/frequenci.es" target="_blank">Github</TextLink>.</Copy>
     </Flyout>);
   }
 }
