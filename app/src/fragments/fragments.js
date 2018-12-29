@@ -25,6 +25,8 @@ export const AirportFragment = graphql`
       municipality
       name
       type
+      timezone_id
+      timezone_offset
     }
   }
 `

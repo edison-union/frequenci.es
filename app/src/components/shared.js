@@ -100,7 +100,8 @@ export const Input = styled.input`
 export const Card = styled(LinkSwitch)`
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex: 1 0 100%;
   font-size: .8rem;
   min-height: min-content;
   padding: ${spacing.xs} ${spacing.sm};
@@ -125,11 +126,19 @@ export const Card = styled(LinkSwitch)`
 `
 
 export const CardTitle = styled.strong`
+  display: flex;
   font-family: ${fonts.button};
   font-size: 1rem;
   font-weight: 600;
+  flex-basis: 50%;
+`
+
+export const CardTime = styled(CardTitle)`
+  flex-basis: auto;
+  margin-left: auto;
 `
 
 export const CardCopy = styled.p`
   margin: 0;
+  flex-basis: 100%;
 `

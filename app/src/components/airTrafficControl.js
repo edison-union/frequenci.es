@@ -141,6 +141,7 @@ class AirTrafficControl extends Component {
                 return f.callsign === flight.callsign
               })
             }).map((flight) => {
+              flight.timezone_id = airport.timezone_id;
               flight.departure_airport = data.filter((airport) => {
                 return airport.gps_code === flight.estDepartureAirport
               })[0]
@@ -185,7 +186,6 @@ class AirTrafficControl extends Component {
       return a.coordinates.lng - b.coordinates.lng || a.coordinates.lat - b.coordinates.lat;
     }).forEach((airport) => {
       const time = now.clone();
-      time.tz(airport.timezone_id);
 
       // Create timestamps to search by i.e. now and now - N minutes
       const end = time.unix();

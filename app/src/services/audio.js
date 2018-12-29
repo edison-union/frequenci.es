@@ -92,7 +92,6 @@ class AudioService {
     const source = this.context.createBufferSource();
     const group = Object.keys(AirportConstants).indexOf(options.type);
     const sound = this.mapHeightToNote(options.height);
-
     source.buffer = this.buffer[group][sound];
 
     if (window.PannerNode) {
@@ -104,9 +103,9 @@ class AudioService {
         positionZ: options.spatialData.z,
         refDistance: 0,
         maxDistance: 10,
-        rolloffFactor: 2,
-        coneInnerAngle: 30,
-        coneOuterAngle: 40,
+        rolloffFactor: 3,
+        coneInnerAngle: 5,
+        coneOuterAngle: 30,
         coneOuterGain: .7
       });
       source.connect(panner).connect(this.context.destination);
