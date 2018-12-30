@@ -301,12 +301,13 @@ const MapContainer = styled.div`
   width: 100vw;
 `
 
-const Loading = styled(MapContainer)`
+const Loading = styled(Div100vh)`
   background-color: ${colours.map.water};
   background-image: url(${spinner});
   background-position: 50% 48%;
   background-repeat: no-repeat;
   background-size: 3rem;
+  width: 100%;
 `
 
 const Map = styled(MapContainer)``
