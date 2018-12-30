@@ -1,6 +1,7 @@
 import BufferLoader from './buffer'
 import { AirportConstants } from '../constants/airports'
 import { scale } from '../util/number'
+import { isIOS } from 'reaxt-device-detect'
 
 class AudioService {
   constructor() {
@@ -50,7 +51,7 @@ class AudioService {
         // createScriptProcessor is choppy AF and no alternative is available until
         // AudioWorklets receive full support
         // So we set the value to 0 so it's silent, and keeps the audio context running
-        bufferL[i] = bufferR[i] = Math.random() * 2 - 1;
+        bufferL[i] = bufferR[i] = isIOS ? 0 : Math.random() * 2 - 1;
       }
     }
 
