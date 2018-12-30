@@ -46,6 +46,10 @@ class AudioService {
       const bufferR = e.outputBuffer.getChannelData(1);
 
       for (let i = 0; i < bufferLen; i++) {
+        // Web Audio API in iOS sucks
+        // createScriptProcessor is choppy AF and no alternative is available until
+        // AudioWorklets receive full support
+        // So we set the value to 0 so it's silent, and keeps the audio context running
         bufferL[i] = bufferR[i] = Math.random() * 2 - 1;
       }
     }
@@ -67,7 +71,8 @@ class AudioService {
 
   backgroundSound() {
     const note = 70;
-    const oscillators = 40;
+    const oscillators = 20;
+
     for (let i = 0; i < oscillators; i++) {
       var frequency = Math.pow(2, (note - 69) / 12) * 440
       frequency += Math.random() * 4 - 2;

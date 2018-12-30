@@ -101,7 +101,7 @@ export const Card = styled(LinkSwitch)`
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  flex: 1 0 100%;
+  flex: 0 0 100%;
   font-size: .8rem;
   min-height: min-content;
   padding: ${spacing.xs} ${spacing.sm};

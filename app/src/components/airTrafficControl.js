@@ -219,9 +219,9 @@ class AirTrafficControl extends Component {
   startAudio() {
     this.song = new Song();
     this.audioService = new AudioService();
+    this.audioService.backgroundSound();
     this.audioService.onReady = () => {
       this.startRequests();
-      this.audioService.backgroundSound();
     }
   }
 

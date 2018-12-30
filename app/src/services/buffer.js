@@ -5,23 +5,25 @@ class BufferLoader {
     this.buffer = [];
   }
 
-  loadSoundFile(url, type) {
+  loadSoundFile(url) {
     return fetch(url)
       .then((response) => response.arrayBuffer())
       .then((response) => {
-        return this.context.decodeAudioData(response, (buffer) => {
-          return {
-            type,
-            buffer
-          }
+        let context = this.context;
+        var promise = new Promise(function(resolve, reject) {
+          return context.decodeAudioData.call(context, response, resolve, reject);
         });
+
+        return promise;
+      }).then((buffer) => {
+        return buffer;
       });
   }
 
   load() {
     return Promise.all(this.urls.map((group) => {
       return Promise.all(group.sounds.map((url) => {
-        return this.loadSoundFile(url, group.type);
+        return this.loadSoundFile(url);
       }))
     }));
   }
