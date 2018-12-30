@@ -1,7 +1,7 @@
 import BufferLoader from './buffer'
 import { AirportConstants } from '../constants/airports'
 import { scale } from '../util/number'
-import { isIOS } from 'reaxt-device-detect'
+import { isIOS } from 'react-device-detect'
 
 class AudioService {
   constructor() {
