@@ -32,7 +32,9 @@ class Search extends Component {
 
   render() {
     if (this.props.childActive === 0) {
-      this.inputRef.focus();
+      if (this.inputRef) {
+        this.inputRef.focus();
+      }
     }
 
     return (<Flyout>

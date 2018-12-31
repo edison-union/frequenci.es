@@ -4,7 +4,7 @@ import { colours, fonts, spacing, timings } from '../style/variables'
 import { Link } from 'gatsby'
 import { gpuStyles } from '../style/mixins'
 
-const LinkSwitch = (props) => {
+export const LinkSwitch = (props) => {
   if (props.href) {
     return (<a {...props}>{props.children}</a>)
   }
