@@ -115,11 +115,12 @@ class AirTrafficControl extends Component {
   }
 
   getDepartures(airport, start, end) {
+    /*
     this.setState((prevState) => {
       return {
         activeAirports: [...prevState.activeAirports, airport.gps_code]
       }
-    });
+    });*/
 
     return fetch(`${process.env.API_URL_DEPARTURES}?airport=${airport.gps_code}&begin=${start}&end=${end}`)
       .then((response) => {
@@ -167,11 +168,13 @@ class AirTrafficControl extends Component {
         }
         return false;
       }).finally(() => {
+        /*
+        Uses too much CPU, find a better way to do this
         this.setState((prevState) => {
           return {
             activeAirports: prevState.activeAirports.filter((a) => !a.gps_code === airport.gps_code)
           }
-        });
+        });*/
       });
   }
 
