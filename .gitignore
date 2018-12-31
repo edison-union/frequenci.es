@@ -62,3 +62,4 @@ bundle-stats.json
 .env.*
 data-processing
 ableton
+__snapshots__
