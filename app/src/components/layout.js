@@ -68,6 +68,8 @@ const Layout = ({ children, pageContext, location }) => (
               { name: "msapplication-square150x150logo", content: "/mstile-150x150.png" },
               { name: "msapplication-wide310x150logo", content: "/mstile-310x150.png" },
               { name: "msapplication-square310x310logo", content: "/mstile-310x310.png" },
+              { name: "apple-mobile-web-app-capable", content: "yes" },
+              { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
             ]}
           >
             <html lang="en"/>
