@@ -4,7 +4,7 @@ import FlightBoard from './flightBoard'
 import { countries, country, data, location, center } from '../tests/setup'
 import wrapWithProvider from '../../wrap-with-provider'
 
-describe("AirTrafficControl", () => {
+describe("FlightBoard", () => {
   it("renders correctly", () => {
     const tree = renderer.create(wrapWithProvider(<FlightBoard
       countries={countries}
