@@ -221,15 +221,17 @@ export class AirTrafficControl extends Component {
 
   startAudio() {
     this.song = new Song();
-    this.audioService = new AudioService();
-    this.audioService.backgroundSound();
-    this.audioService.onReady = () => {
-      this.startRequests();
+    if (!process.env.JEST_WORKER_ID) {
+      this.audioService = new AudioService();
+      this.audioService.backgroundSound();
+      this.audioService.onReady = () => {
+        this.startRequests();
+      }
     }
   }
 
   componentDidMount() {
-    if (!isIOS && !process.env.JEST_WORKER_ID) {
+    if (!isIOS || process.env.JEST_WORKER_ID) {
       this.startAudio();
     }
   }

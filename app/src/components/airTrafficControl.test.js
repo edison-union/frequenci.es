@@ -34,17 +34,24 @@ beforeEach(() => {
 })
 
 describe("AirTrafficControl", () => {
-  it("renders correctly", () => {
+  it ("renders correctly", () => {
     expect(renderer.create(wrapped).toJSON()).toMatchSnapshot()
   })
-})
 
-describe("AirTrafficControl", () => {
-  it("convertDistanceToSpatial is correct", () => {
+  it ("convertDistanceToSpatial is correct", () => {
     expect(component.instance().convertDistanceToSpatial(testFlight)).toEqual({
        x: 0.8318062867676936,
        y: -0.07722801156759385,
        z: -0.186
-    });
+    })
+  })
+
+  it ("isDecayedFlight returns true on old flight", () => {
+    expect(component.instance().isDecayedFlight(testFlight)).toEqual(true);
+  })
+
+  it ("isDecayedFlight returns false on new flight", () => {
+    testFlight.timestamp = Date.now;
+    expect(component.instance().isDecayedFlight(testFlight)).toEqual(false);
   })
 })

@@ -11,7 +11,7 @@ class Song {
   }
 
   getBars(bars) {
-    return this.getNoteDelay(this.beatsPerBar, bars);
+    return this.getNoteDelay(this.barLength, this.barLength) * bars;
   }
 }
 
