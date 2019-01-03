@@ -17,7 +17,7 @@ import { colours, spacing } from '../style/variables'
 import { above } from '../style/mixins'
 import * as spinner from '../images/icon-spinner.svg'
 
-class AirTrafficControl extends Component {
+export class AirTrafficControl extends Component {
   constructor() {
     super();
 
@@ -229,7 +229,7 @@ class AirTrafficControl extends Component {
   }
 
   componentDidMount() {
-    if (!isIOS) {
+    if (!isIOS && !process.env.JEST_WORKER_ID) {
       this.startAudio();
     }
   }
@@ -237,7 +237,11 @@ class AirTrafficControl extends Component {
   componentWillUnmount() {
     this.queue.pause();
     this.queue.clear();
-    this.audioService.destroy();
+
+    if (this.audioService) {
+      this.audioService.destroy();
+    }
+
     clearInterval(this.interval);
   }
 
@@ -285,6 +289,8 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps
 )(AirTrafficControl)
+
+export const Test = AirTrafficControl;
 
 const Container = styled.section`
   display: flex;
